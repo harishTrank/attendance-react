@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import Linechart from "../../ReuseableComponent/Linechart";
-import Sidebar from "../../ReuseableComponent/Sidebar";
 import Barchart from "../../ReuseableComponent/Barchat";
+import EmployeeCalander from "../../ReuseableComponent/EmployeeCalander";
 
 const DashboardEmp = () => {
   return (
@@ -38,7 +36,7 @@ const DashboardEmp = () => {
       </div>
       <div className="attendance-charts flex alc space-bw">
         <div className="line-chart col-60">
-          <Linechart />
+          <EmployeeCalander />
         </div>
         <div className="bar-chart col-40">
           <Barchart />
