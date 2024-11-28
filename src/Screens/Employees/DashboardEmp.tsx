@@ -18,7 +18,7 @@ const DashboardEmp = () => {
           <div className="icon green">
             <i className="fa-solid fa-bag-shopping"></i>
           </div>
-          <p>Today Absent</p>
+          <p>Total Absent</p>
           <h3>03</h3>
         </div>
         <div className="stat-cards">
