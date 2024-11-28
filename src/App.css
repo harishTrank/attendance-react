@@ -24,6 +24,10 @@ body {
   justify-content: space-between;
 }
 
+.just-center {
+  justify-content: center;
+}
+
 li {
   list-style: none;
 }
@@ -38,4 +42,8 @@ a {
 
 .col-40 {
   width: 39%;
+}
+
+.pos-relate {
+  position: relative;
 }

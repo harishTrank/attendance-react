@@ -1,41 +1,14 @@
 import React, { useState } from 'react'
 import './Dashboard.css';
-import Linechart from '../ReuseableComponent/Linechart';
-import Barchart from '../ReuseableComponent/Barchat';
-
-const menuTab: any = [
-    {
-        name: "Dashboard",
-        icon: "fa-solid fa-house"
-    },
-    {
-        name: "Employees",
-        icon: "fa-solid fa-users"
-    },
-    {
-        name: "Leaves",
-        icon: "fa-solid fa-person-through-window"
-    },
-]
+import Linechart from '../../ReuseableComponent/Linechart';
+import Barchart from '../../ReuseableComponent/Barchat';
+import Sidebar from '../../ReuseableComponent/Sidebar';
 
 const Dashboard = () => {
-
-    const [activeTab, setActiveTab] = useState("Dashboard");
-
     return (
         <>
-            <header></header>
             <div className='flex'>
-                <div className="sidebar">
-                    <ul>
-                        {menuTab.map((item: any) => (
-                            <li className={`${activeTab === item.name ? "active" : ""}`} onClick={() => setActiveTab(item.name)}>
-                                <i className={item.icon}></i>
-                                {item.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <Sidebar current={"Dashboard"} />
                 <div className="main-area">
                     <div className="stat-info">
                         <div className="stat-cards">
