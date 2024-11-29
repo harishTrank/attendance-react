@@ -48,35 +48,393 @@ a {
   position: relative;
 }
 
-/* tabs css */
-/* Container for the tabs */
-.tabs-container {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
 
-/* Style for each tab button */
-.tab-button {
-  padding: 10px 20px;
-  background-color: #f0f0f0;
-  color: #000;
-  border: none;
-  border-radius: 4px;
+
+/* upper tabs css */
+.upper-tabs{
+  padding: 15px;
+  background: #fff;
+  margin-bottom: 10px; 
+}
+.upper-tabs ul li{
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  padding: 10px;
 }
 
-/* Style for the active tab */
-.tab-button.active {
+
+.upper-tabs ul li.active {
+  background: #3354F4;
+  color: #fff;
+  border-radius: 5px;
+}
+
+
+
+.upper-tabs ul li:hover {
+  background: #3354F4;
+  color: #fff;
+  border-radius: 5px;
+}
+/* upper search */
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  padding: 5px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px;
+  flex: 1;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.search-button:active {
+  transform: scale(0.95);
+}
+.all-employees h1{
+  font-size: 30px;
+
+ 
+}
+.csvdownload-btn button{
+  background-color: #007bff;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.from{
+  margin-right: 30px;
+}
+.from input,.to input{
+width: 200px;
+  padding: 5px;
+}
+.from label,.to label{
+  display: block;
+}
+/* employee tab css */
+.add-employee button{
+  padding: 10px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+/* employee tab popup */
+/* Main Container for Add Employee Button */
+.add-employee button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-employee button:hover {
+  background-color: #0056b3;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Box */
+.popup {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  width: 500px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #007bff;
+}
+
+/* Popup Heading */
+.popup h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+  width: 48%;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+.form-group-textarea{
+  width: 100%;
+}
+.form-group-textarea label{
+  display: block;
+  text-align: start;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+.form-group-textarea textarea{
+  width: 100%;
+  resize: none;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.form-group select{
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-actions button:first-of-type {
   background-color: #007bff;
   color: #fff;
 }
 
-/* Content box for the selected tab */
-.tab-content {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 4px;
-  background-color: #fff;
+.form-actions button:first-of-type:hover {
+  background-color: #0056b3;
 }
+
+.form-actions button:last-of-type {
+  background-color: #ccc;
+  color: #333;
+}
+
+.form-actions button:last-of-type:hover {
+  background-color: #bbb;
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* clock in  */
+/* Timer container styles */
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  margin-top: 40px;
+}
+
+/* Circle styles */
+.circle {
+  width: 250px;
+  height: 250px;
+  border: 8px solid #3498db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f8ff;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.time {
+  font-size: 24px;
+  font-weight: bold;
+  color: #3498db;
+}
+
+/* Button styles */
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clock-in {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.clock-in:hover {
+  background-color: #27ae60;
+}
+
+.clock-out {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.clock-out:hover {
+  background-color: #c0392b;
+}
+/* logout popup */
+/* Modal overlay to darken the background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal box */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+/* Modal actions (buttons) */
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.confirm-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background: #c0392b;
+}
+
+.cancel-btn {
+  background: #2ecc71;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #27ae60;
+}
+
+
+

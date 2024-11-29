@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import "./App.css";
 import Dashboard from "./Screens/Admin/Dashboard";
 import EmployeeTab from "./Screens/Admin/EmployeeTab";
 import LeavesTab from "./Screens/Admin/LeavesTab";
+import EmployeeView from "./Screens/Admin/EmployeeView";
 import AttendanceManage from "./Screens/Admin/AttendanceManage";
-
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/employees" element={<EmployeeTab />} />
         <Route path="/leaves" element={<LeavesTab />} />
-        <Route path="/attendance" element={<AttendanceManage/>}/>
-    
+        <Route path="/view-employee/:id" element={<EmployeeView />} />
+        <Route path="/attendancemanage" element={<AttendanceManage/>}/>
       </Routes>
     </BrowserRouter>
   );

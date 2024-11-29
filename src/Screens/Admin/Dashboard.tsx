@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import './Dashboard.css';
-import Linechart from '../../ReuseableComponent/Linechart';
-import Barchart from '../../ReuseableComponent/Barchat';
-import Sidebar from '../../ReuseableComponent/Sidebar';
+import "./Dashboard.css";
+import Linechart from "../../ReuseableComponent/Linechart";
+import Sidebar from "../../ReuseableComponent/Sidebar";
+import PieChartAdmin from "../../ReuseableComponent/PieChartAdmin";
+import Barchart from "../../ReuseableComponent/Barchat";
 
 const Dashboard = () => {
     return (
@@ -22,14 +22,14 @@ const Dashboard = () => {
                             <div className="icon green">
                                 <i className="fa-solid fa-bag-shopping"></i>
                             </div>
-                            <p>Total Present</p>
+                            <p>Present</p>
                             <h3>70</h3>
                         </div>
                         <div className="stat-cards">
                             <div className="icon red">
                                 <i className="fa-solid fa-bag-shopping"></i>
                             </div>
-                            <p>Total Absent</p>
+                            <p>Absent</p>
                             <h3>05</h3>
                         </div>
                         <div className="stat-cards">
@@ -45,7 +45,8 @@ const Dashboard = () => {
                             <Linechart />
                         </div>
                         <div className="bar-chart col-40">
-                            <Barchart />
+                            {/* <Barchart /> */}
+                            <PieChartAdmin/>
                         </div>
                     </div>
                     <div className="all-employees">

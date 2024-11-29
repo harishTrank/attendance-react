@@ -1,74 +1,51 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    ChartOptions,
-} from 'chart.js';
+import React, { useEffect, useState } from 'react'
 
-// Register Chart.js components
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-);
+const Barchat = () => {
+  const [seconds, setSeconds]:any = useState(0); 
+  const [isRunning, setIsRunning]:any = useState(false); 
 
-const Barchart = () => {
-    const data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'], // X-axis labels
-        datasets: [
-            {
-                label: 'Sales ($)',
-                data: [12, 19, 3, 5, 2, 3], // Data points
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                ],
-                borderWidth: 1,
-            },
-        ],
-    };
+  useEffect(() => {
+    let timer:any;
+    if (isRunning) {
+      timer = setInterval(() => {
+        setSeconds((prevSeconds:any) => prevSeconds + 1);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
 
-    const options: ChartOptions<'bar'> = {
-        responsive: true,
-        maintainAspectRatio: false, // Allows custom height/width
-        plugins: {
-            legend: {
-                display: false,
-            },
-            title: {
-                display: true,
-                text: 'Weekly Attendance Comparision Chart', // Title of the chart
-            },
-        },
-        scales: {
-            y: {
-                beginAtZero: true, // Y-axis starts at 0
-            },
-        },
-    };
+    return () => clearInterval(timer); // Cleanup on component unmount
+  }, [isRunning]);
 
-    return <Bar data={data} options={options} />
-};
+  const formatTime = (seconds:any) => {
+    const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
+    const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${hours}:${minutes}:${secs}`;
+  };
 
-export default Barchart;
+  const handleClockIn = () => {
+    setIsRunning(true);
+  };
+
+  const handleClockOut = () => {
+    setIsRunning(false);
+  };
+  return (
+    <div className="timer-container">
+      <div className="circle">
+        <div className="time">{formatTime(seconds)}</div>
+      </div>
+      <div className="buttons">
+        <button onClick={handleClockIn} className="clock-in">
+          Clock In
+        </button>
+        <button onClick={handleClockOut} className="clock-out">
+          Clock Out
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default Barchat
