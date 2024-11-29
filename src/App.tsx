@@ -3,6 +3,8 @@ import './App.css';
 import Dashboard from "./Screens/Admin/Dashboard";
 import EmployeeTab from "./Screens/Admin/EmployeeTab";
 import LeavesTab from "./Screens/Admin/LeavesTab";
+import AttendanceManage from "./Screens/Admin/AttendanceManage";
+
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/employees" element={<EmployeeTab />} />
         <Route path="/leaves" element={<LeavesTab />} />
+        <Route path="/attendance" element={<AttendanceManage/>}/>
+    
       </Routes>
     </BrowserRouter>
   );

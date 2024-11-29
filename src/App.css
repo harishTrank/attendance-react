@@ -47,3 +47,36 @@ a {
 .pos-relate {
   position: relative;
 }
+
+/* tabs css */
+/* Container for the tabs */
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Style for each tab button */
+.tab-button {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Style for the active tab */
+.tab-button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Content box for the selected tab */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #fff;
+}

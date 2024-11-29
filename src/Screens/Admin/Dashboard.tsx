@@ -22,14 +22,14 @@ const Dashboard = () => {
                             <div className="icon green">
                                 <i className="fa-solid fa-bag-shopping"></i>
                             </div>
-                            <p>Present</p>
+                            <p>Total Present</p>
                             <h3>70</h3>
                         </div>
                         <div className="stat-cards">
                             <div className="icon red">
                                 <i className="fa-solid fa-bag-shopping"></i>
                             </div>
-                            <p>Absent</p>
+                            <p>Total Absent</p>
                             <h3>05</h3>
                         </div>
                         <div className="stat-cards">

@@ -15,6 +15,9 @@ const menuTab: any = [
     }, {
         name: "Logout",
         icon: "fa-solid fa-right-from-bracket"
+    },{
+        name:"Attendance Management",
+        icon:"fa-solid fa-calendar"
     }
 ]
 const Sidebar = ({ current }: any) => {
@@ -27,6 +30,8 @@ const Sidebar = ({ current }: any) => {
             navigate("/employees");
         } else if (val === "Leaves") {
             navigate("/leaves");
+        } else if(val=== "Attendance Management"){
+            navigate("/attendance")
         }
     }
 
