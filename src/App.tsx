@@ -15,8 +15,10 @@ function App() {
         <Route path="/employees" element={<EmployeeTab />} />
         <Route path="/leaves" element={<LeavesTab />} />
         <Route path="/view-employee/:id" element={<EmployeeView />} />
-        <Route path="/attendancemanage" element={<AttendanceManage/>}/>
-        <Route path="/anouncement" element={<Anouncement/>}/>
+        <Route path="/attendancemanage" element={<AttendanceManage />} />
+        <Route path="/anouncement" element={<Anouncement />} />
+
+        <Route path="/employee-dashboard" element={<EmployeeView />} />
       </Routes>
     </BrowserRouter>
   );

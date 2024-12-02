@@ -5,25 +5,30 @@ import EmpTabForAdmin from "../../ReuseableComponent/EmpTabForAdmin";
 import ApplyLeave from "../Employees/ApplyLeave";
 import ViewAttendaceEmp from "../Employees/ViewAttendaceEmp";
 import ProfileEmp from "../Employees/ProfileEmp";
+import { useLocation } from "react-router-dom";
 
 const EmployeeView = () => {
   const [activeTab, setActiveTab]: any = useState("Dashboard");
+  const { pathname } = useLocation();
 
   return (
     <div className="flex">
-      <Sidebar current={"Employees"} />
-      <div className="main-area">
+      {!pathname.includes("dashboard") && <Sidebar current={"Employees"} />}
+      <div
+        className="main-area"
+        style={{
+          width: pathname.includes("dashboard") ? "100%" : "calc(100% - 200px)",
+        }}
+      >
         <EmpTabForAdmin activeTab={activeTab} setActiveTab={setActiveTab} />
         {activeTab === "Dashboard" ? (
           <DashboardEmp />
         ) : activeTab === "Apply Leave" ? (
-          <ApplyLeave/>
+          <ApplyLeave />
         ) : activeTab === "View Attendance" ? (
-         <ViewAttendaceEmp/>
-       
-   
+          <ViewAttendaceEmp />
         ) : (
-          <ProfileEmp/>
+          <ProfileEmp />
         )}
       </div>
     </div>
