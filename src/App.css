@@ -436,5 +436,59 @@ button {
   background: #27ae60;
 }
 
+/* leave page css */
+.Leave-component{
+  background: #fff;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+.leave-content{
+  padding: 10px;
+}
+.leave-content h3{
+  text-align: center;
+  font-size: 25px;
+}
+.el-available,.sl-available{
+  border: 1px solid #007bff;
+  background: #007bff;
+  color: #fff;
+  border-radius: 5px;
 
-
+}
+.el-available p,.sl-available p{
+  padding: 10px;
+}
+.leave-available{
+  margin-bottom: 25px;
+}
+.employee-name{
+  margin-bottom: 15px;
+}
+.employee-name label{
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.employee-name input,.employee-name select{
+  width: 100%;
+  padding: 10px;
+}
+.employee-name textarea{
+  width: 100%;
+  resize: none;
+}
+.submit-cancel button{
+  padding: 10px;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: 5px;
+  width: 45%;
+  font-size: 16px;
+}
+.profile-page h2{
+  font-size: 25px;
+  margin-bottom: 25px;
+}

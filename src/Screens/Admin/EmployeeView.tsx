@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import DashboardEmp from "../Employees/DashboardEmp";
 import EmpTabForAdmin from "../../ReuseableComponent/EmpTabForAdmin";
+import ApplyLeave from "../Employees/ApplyLeave";
+import ViewAttendaceEmp from "../Employees/ViewAttendaceEmp";
+import ProfileEmp from "../Employees/ProfileEmp";
 
 const EmployeeView = () => {
   const [activeTab, setActiveTab]: any = useState("Dashboard");
@@ -14,11 +17,13 @@ const EmployeeView = () => {
         {activeTab === "Dashboard" ? (
           <DashboardEmp />
         ) : activeTab === "Apply Leave" ? (
-          <p>Apply leave</p>
+          <ApplyLeave/>
         ) : activeTab === "View Attendance" ? (
-          <p>View Attendance</p>
+         <ViewAttendaceEmp/>
+       
+   
         ) : (
-          <p>Profile</p>
+          <ProfileEmp/>
         )}
       </div>
     </div>
