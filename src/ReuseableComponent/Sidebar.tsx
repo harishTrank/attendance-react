@@ -14,7 +14,7 @@ const menuTab: any = [
     icon: "fa-solid fa-person-through-window",
   },
   {
-    name: "Announcement",
+    name: "Anouncement",
     icon: "fa-solid fa-bullhorn",
   },
   {
@@ -41,6 +41,8 @@ const Sidebar = ({ current }: any) => {
       navigate('/attendancemanage')
     }else if(val==="Logout"){
       setLogoutModal(true)
+    }else if(val==="Anouncement"){
+      navigate('/anouncement')
     }
   };
 

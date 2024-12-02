@@ -5,6 +5,7 @@ import EmployeeTab from "./Screens/Admin/EmployeeTab";
 import LeavesTab from "./Screens/Admin/LeavesTab";
 import EmployeeView from "./Screens/Admin/EmployeeView";
 import AttendanceManage from "./Screens/Admin/AttendanceManage";
+import Anouncement from "./Screens/Admin/Anouncement";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/leaves" element={<LeavesTab />} />
         <Route path="/view-employee/:id" element={<EmployeeView />} />
         <Route path="/attendancemanage" element={<AttendanceManage/>}/>
+        <Route path="/anouncement" element={<Anouncement/>}/>
       </Routes>
     </BrowserRouter>
   );

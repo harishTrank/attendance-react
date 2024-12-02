@@ -13,6 +13,7 @@ const EmployeeTab = () => {
   const [lastName,setLastName]:any=useState('')
   const [email,setEmail]:any=useState('')
   const [deletePopup,setDeletePopup]:any=useState(false)
+  const [editPopup,setEditPopup]:any=useState(false)
 
 
   const handledeletepopup=()=>{
@@ -26,6 +27,10 @@ const EmployeeTab = () => {
   }
   const closePopup=()=>{
     setEmployeePopup(false)
+  }
+
+  const toggleEditPopup=()=>{
+    setEditPopup(!editPopup)
   }
   return (
     <>
@@ -159,7 +164,7 @@ const EmployeeTab = () => {
                       <i className="fa-solid fa-eye"></i>
                     </button>
                     <button className="edit">
-                      <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-user-pen" onClick={toggleEditPopup}></i>
                     </button>
                     <button className="delete" onClick={handledeletepopup}>
                       <i className="fa-solid fa-trash"></i>
@@ -180,7 +185,7 @@ const EmployeeTab = () => {
                       <i className="fa-solid fa-eye"></i>
                     </button>
                     <button className="edit">
-                      <i className="fa-solid fa-user-pen"></i>
+                      <i className="fa-solid fa-user-pen" onClick={()=>toggleEditPopup()}></i>
                     </button>
                     <button className="delete">
                       <i className="fa-solid fa-trash"></i>
@@ -205,6 +210,86 @@ const EmployeeTab = () => {
             </div>
           </div>
         </div>}
+
+        <div className="popup-overlay-edit" style={{display:editPopup?"block":"none"}}>
+          <div className="popup-edit">
+            <button className="close-button" onClick={toggleEditPopup}>
+              ✖
+            </button>
+            <h2>Edit Employee Details</h2>
+            <div className="flex space-bw alc">
+            <div className="form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                placeholder="Enter first name"
+                
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                placeholder="Enter last name"
+               
+                required
+              />
+            </div>
+            </div>
+            <div className="flex space-bw alc">
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="Enter email"
+                
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label >Contact</label>
+              <input type="text" />
+            </div>
+            
+            </div>
+            <div className="flex space-bw alc">
+            <div className="form-group">
+              <label>Gender</label>
+             <select name="" id="">
+              <option value="">Male</option>
+              <option value="">Female</option>
+              <option value="">Others</option>
+             </select>
+            </div>
+            <div className="form-group">
+              <label >Date of Birth</label>
+              <input type="date" />
+            </div>
+            
+            </div>
+            <div className="flex space-bw alc">
+            <div className="form-group">
+              <label>Date of Joining</label>
+             <input type="date" />
+            </div>
+            <div className="form-group">
+              <label >Profile</label>
+              <input type="text" />
+            </div>
+            
+            </div>
+            <div className="form-group-textarea">
+              <label>Address</label>
+              <textarea name="" id="" rows={4} cols={50}></textarea>
+            </div>
+           
+            <div className="form-actions">
+              <button >Submit</button>
+              <button >Cancel</button>
+            </div>
+          </div>
+        </div>
     </>
   );
 };

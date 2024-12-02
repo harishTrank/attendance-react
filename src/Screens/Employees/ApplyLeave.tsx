@@ -5,18 +5,18 @@ const ApplyLeave = () => {
     <div className="Leave-component">
     <div className="leave-content">
     <h3>Apply Leave</h3>
-    <div className="leave-available flex space-bw">
+    <div className="leave-available flex">
       <div className="el-available">
-        <p>EL Available:3</p>
+        <p>EL Available: 3</p>
       </div>
       <div className="sl-available">
-        <p>SL Available:3</p>
+        <p>SL Available: 3</p>
       </div>
     </div>
     <div className="employee-details">
-      <div className="employee-name">
-        <label htmlFor="">Employee Name</label>
-        <input type="text" />
+      <div className="employee-name flex alc">
+       <p>Employee Name:</p>&nbsp;&nbsp;
+        <span>Pranav Kumar</span>
       </div>
       <div className="employee-name">
         <label htmlFor="">Type of Leave</label>

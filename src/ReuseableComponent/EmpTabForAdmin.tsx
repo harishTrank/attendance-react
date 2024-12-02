@@ -28,7 +28,7 @@ const EmpTabForAdmin = ({ activeTab, setActiveTab }: any) => {
   return (
     <div className="sidebar-emp ">
       <div className="upper-tabs">
-      <ul className="flex space-bw">
+      <ul className="flex">
         {tabData.map((item: any) => (
           <li
             key={item.name}

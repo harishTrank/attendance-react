@@ -20,6 +20,7 @@ body {
   align-items: center;
 }
 
+
 .space-bw {
   justify-content: space-between;
 }
@@ -59,6 +60,8 @@ a {
 .upper-tabs ul li{
   cursor: pointer;
   padding: 10px;
+  margin-right: 10px;
+
 }
 
 
@@ -185,6 +188,7 @@ width: 200px;
   border-radius: 10px;
   padding: 30px;
   width: 500px;
+  
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -439,9 +443,9 @@ button {
 /* leave page css */
 .Leave-component{
   background: #fff;
-  width: 80%;
-  margin: 0 auto;
-  border-radius: 5px;
+ 
+  
+  border-radius: 10px;
 }
 .leave-content{
   padding: 10px;
@@ -455,6 +459,7 @@ button {
   background: #007bff;
   color: #fff;
   border-radius: 5px;
+  margin-right: 15px;
 
 }
 .el-available p,.sl-available p{
@@ -474,10 +479,12 @@ button {
 .employee-name input,.employee-name select{
   width: 100%;
   padding: 10px;
+  outline: none;
 }
 .employee-name textarea{
   width: 100%;
   resize: none;
+  outline: none;
 }
 .submit-cancel button{
   padding: 10px;
@@ -491,4 +498,68 @@ button {
 .profile-page h2{
   font-size: 25px;
   margin-bottom: 25px;
+}
+/* edit employee popup */
+.popup-overlay-edit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Box */
+.popup-edit {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  width: 550px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  
+}
+.popup-edit h2{
+  margin-bottom: 10px;
+}
+.employee-name p{
+  font-weight: bold;
+  font-size: 18px;
+}
+.employee-name span{
+  font-size: 18px;
+}
+/* anouncement form css */
+.anouncement-form label{
+  display: block;
+  margin-bottom: 15px;
+}
+.anouncement-form input,.anouncement-form textarea{
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  resize: none;
+  margin-bottom: 15px;
+}
+.submit-btn button{
+  width: 100%;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  
+}
+/* anouncement table */
+.anouncement-table table tr th{
+  background: #007bff !important;
+  color: #fff;
 }
