@@ -124,10 +124,30 @@ const EmployeeTab = () => {
              <input type="date" />
             </div>
             <div className="form-group">
-              <label >Profile</label>
+              <label >Designation</label>
               <input type="text" />
             </div>
             
+            </div>
+            <div className="flex space-bw alc">
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="text"
+                placeholder="Enter first name"
+               
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Confirm Password</label>
+              <input
+                type="text"
+                placeholder="Enter last name"
+              
+                required
+              />
+            </div>
             </div>
             <div className="form-group-textarea">
               <label>Address</label>
@@ -135,8 +155,10 @@ const EmployeeTab = () => {
             </div>
            
             <div className="form-actions">
+            <button >Cancel</button>
               <button >Submit</button>
-              <button >Cancel</button>
+             
+             
             </div>
           </div>
         </div>
@@ -274,7 +296,7 @@ const EmployeeTab = () => {
              <input type="date" />
             </div>
             <div className="form-group">
-              <label >Profile</label>
+              <label >Designation</label>
               <input type="text" />
             </div>
             

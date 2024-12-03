@@ -22,9 +22,14 @@ const menuTab: any = [
     icon: "fa-solid fa-calendar-days",
   },
   {
+    name:"Regularization",
+    icon:"fa-solid fa-clock"
+  },
+  {
     name: "Logout",
     icon: "fa-solid fa-right-from-bracket",
   },
+
 ];
 const Sidebar = ({ current }: any) => {
   const [logoutModal,setLogoutModal]:any=useState(false)
@@ -43,6 +48,8 @@ const Sidebar = ({ current }: any) => {
       setLogoutModal(true)
     }else if(val==="Anouncement"){
       navigate('/anouncement')
+    }else if(val==="Regularization"){
+      navigate('/regulariseadmin')
     }
   };
 
@@ -74,11 +81,12 @@ const handleLogoutCancel = () => {
           <div className="modal">
             <p>Are you sure you want to logout?</p>
             <div className="modal-actions">
-              <button onClick={handleLogoutConfirm} className="confirm-btn">
-                Yes
-              </button>
-              <button onClick={handleLogoutCancel} className="cancel-btn">
+             
+              <button onClick={handleLogoutCancel} className="confirm-btn">
                 No
+              </button>
+              <button onClick={handleLogoutConfirm} className="cancel-btn">
+                Yes
               </button>
             </div>
           </div>
