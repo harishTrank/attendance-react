@@ -20,6 +20,10 @@ const tabData: any = [
     name: "Profile",
     icon: "fa-solid fa-user-tie",
   },
+  {
+    name:"Regularization",
+    icon:"fa-solid fa-clock"
+  },
 ];
 const EmpTabForAdmin = ({ activeTab, setActiveTab }: any) => {
   const tabChangeHandler = (val: any) => {

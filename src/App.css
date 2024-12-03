@@ -223,8 +223,10 @@ width: 200px;
 .form-group {
   margin-bottom: 15px;
   text-align: left;
-  width: 48%;
+  width: 100%;
+  
 }
+
 
 .form-group label {
   display: block;
@@ -267,9 +269,27 @@ width: 200px;
   outline: none;
   transition: border-color 0.3s;
 }
+.form-group p{
+  border: 1px solid #F7F7F7		;
+  background:#F7F7F7	;
+  padding: 10px;
+  color:#000;
+}
+.form-group-textarea p{
+  border: 1px solid #F7F7F7		;
+  background:#F7F7F7	;
+  padding: 10px;
+  color:#000;
+}
 
 .form-group input:focus {
   border-color: #007bff;
+}
+.userfinalname{
+  margin-left: 10px;
+}
+.profile-upper{
+  margin-bottom: 20px;
 }
 
 /* Form Actions */
@@ -289,21 +309,21 @@ width: 200px;
   cursor: pointer;
 }
 
-.form-actions button:first-of-type {
+.form-actions button:last-of-type {
   background-color: #007bff;
   color: #fff;
 }
 
-.form-actions button:first-of-type:hover {
+.form-actions button:last-of-type:hover {
   background-color: #0056b3;
 }
 
-.form-actions button:last-of-type {
+.form-actions button:first-of-type {
   background-color: #ccc;
   color: #333;
 }
 
-.form-actions button:last-of-type:hover {
+.form-actions button:first-of-type:hover {
   background-color: #bbb;
 }
 
@@ -495,10 +515,16 @@ button {
   width: 45%;
   font-size: 16px;
 }
+.profile-main{
+  width: 100%;
+  margin: 0 auto;
+}
 .profile-page h2{
   font-size: 25px;
   margin-bottom: 25px;
+  text-align: center;
 }
+
 /* edit employee popup */
 .popup-overlay-edit {
   position: fixed;
@@ -562,4 +588,145 @@ button {
 .anouncement-table table tr th{
   background: #007bff !important;
   color: #fff;
+  
 }
+
+/* regularisation popup */
+.intime{
+  border: 1px solid #f7f7f7		;
+  background:#f7f7f7	;
+  padding: 10px;
+}
+.intime p{
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* regularise employee */
+.in-out{
+  margin-bottom: 20px;
+}
+.reg-in{
+  margin-left: 10px;
+}
+.reg-in label{
+  display: block;
+  font-weight: bold;
+}
+.reg-in input{
+  padding: 10px;
+}
+.reg-in p{
+  font-size: 20px;
+  margin-top: 20px;
+}
+/* login css */
+/* General container styling */
+/* General container styling */
+.login-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+/* Left Section: Form */
+.login-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: fade-in-left 1s ease forwards;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Right Section: Image */
+.login-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(50px);
+  animation: fade-in-right 1s ease forwards;
+}
+
+.login-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Keyframes for animations */
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
