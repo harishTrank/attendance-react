@@ -75,6 +75,11 @@ const RegulariseAdmin = () => {
                 <span>9:00AM</span>
             </div>
             </div>
+            <div className="selected-date flex alc">
+              <label htmlFor="">Selected Date:</label>
+              <p>22/09/2024</p>
+            </div>
+            
             <div>
               <label htmlFor="">Reason</label>
               <textarea name="" id="" rows={5}></textarea>

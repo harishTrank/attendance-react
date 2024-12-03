@@ -729,4 +729,16 @@ button {
     transform: translateX(0);
   }
 }
-
+.selected-date{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f7f7f7;
+}
+.selected-date label{
+  font-weight: bold;
+}
+.selected-date p{
+  margin-left: 8px;
+}
