@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./Screens/Admin/Dashboard";
 import EmployeeTab from "./Screens/Admin/EmployeeTab";
