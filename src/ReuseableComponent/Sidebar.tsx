@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { globalUserType } from "../JotaiStore";
+import { userLogoutApi } from "../store/Services";
+import { toast } from "react-hot-toast";
+
 const menuTab: any = [
   {
     name: "Dashboard",
@@ -22,17 +27,17 @@ const menuTab: any = [
     icon: "fa-solid fa-calendar-days",
   },
   {
-    name:"Regularization",
-    icon:"fa-solid fa-clock"
+    name: "Regularization",
+    icon: "fa-solid fa-clock",
   },
   {
     name: "Logout",
     icon: "fa-solid fa-right-from-bracket",
   },
-
 ];
 const Sidebar = ({ current }: any) => {
-  const [logoutModal,setLogoutModal]:any=useState(false)
+  const [logoutModal, setLogoutModal]: any = useState(false);
+  const [, setGlobalUserTypeAtom]: any = useAtom(globalUserType);
   const navigate = useNavigate();
 
   const tabChangeHandler = (val: any) => {
@@ -42,26 +47,33 @@ const Sidebar = ({ current }: any) => {
       navigate("/employees");
     } else if (val === "Leaves") {
       navigate("/leaves");
-    }else if(val==='Attendance Management'){
-      navigate('/attendancemanage')
-    }else if(val==="Logout"){
-      setLogoutModal(true)
-    }else if(val==="Anouncement"){
-      navigate('/anouncement')
-    }else if(val==="Regularization"){
-      navigate('/regulariseadmin')
+    } else if (val === "Attendance Management") {
+      navigate("/attendancemanage");
+    } else if (val === "Logout") {
+      setLogoutModal(true);
+    } else if (val === "Anouncement") {
+      navigate("/anouncement");
+    } else if (val === "Regularization") {
+      navigate("/regulariseadmin");
     }
   };
 
-const handleLogoutConfirm = () => {
-  
-  setLogoutModal(false);
- 
-};
+  const handleLogoutConfirm = () => {
+    userLogoutApi()
+      .then(() => {
+        setGlobalUserTypeAtom(null);
+        sessionStorage.clear();
+        toast.success("Logout user successfully");
+      })
+      .catch((err: any) => {
+        console.log("err", err);
+      });
+    setLogoutModal(false);
+  };
 
-const handleLogoutCancel = () => {
-  setLogoutModal(false); 
-};
+  const handleLogoutCancel = () => {
+    setLogoutModal(false);
+  };
   return (
     <div className="sidebar">
       <ul>
@@ -81,7 +93,6 @@ const handleLogoutCancel = () => {
           <div className="modal">
             <p>Are you sure you want to logout?</p>
             <div className="modal-actions">
-             
               <button onClick={handleLogoutCancel} className="confirm-btn">
                 No
               </button>

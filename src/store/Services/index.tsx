@@ -6,3 +6,8 @@ export const userLoginApi = ({ body }: any) =>
     uriEndPoint: apiUrls.userLogin.v1,
     body,
   });
+
+export const userLogoutApi = () =>
+  callApi({
+    uriEndPoint: apiUrls.userLogout.v1,
+  });
