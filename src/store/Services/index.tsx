@@ -12,7 +12,8 @@ export const userLogoutApi = () =>
     uriEndPoint: apiUrls.userLogout.v1,
   });
 
-export const addEmployeeApi = () =>
+export const createEmployeeApi = ({ body }: any) =>
   callApi({
-    uriEndPoint: apiUrls.userLogout.v1,
+    uriEndPoint: apiUrls.createEmployee.v1,
+    body,
   });
