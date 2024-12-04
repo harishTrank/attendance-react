@@ -1,9 +1,16 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
- import LoginImg from '../../images/loginimg.jpg'
+import LoginImg from "../../images/loginimg.jpg";
+import { userLoginApi } from "../../store/Services";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { globalUserType } from "../../JotaiStore";
+import { useAtom } from "jotai";
 
 const LoginScreen = () => {
+  const navigation: any = useNavigate();
+  const [, setGlobalUserTypeAtom] = useAtom(globalUserType);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,14 +24,37 @@ const LoginScreen = () => {
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
     }),
-    onSubmit: (values) => {
-      console.log("Form values:", values);
+    onSubmit: (body) => {
+      console.log("Form values:", body);
+      userLoginApi({
+        body,
+      })
+        .then((res: any) => {
+          sessionStorage.setItem("accessToken", res?.token?.access);
+          sessionStorage.setItem("userType", res?.user_type);
+          sessionStorage.setItem("userId", res?.userid);
+          setGlobalUserTypeAtom(res?.user_type);
+          toast.success(res?.responsemessage);
+          if (res?.user_type === "Admin") {
+            navigation("/", {
+              userType: res?.user_type,
+              userId: res?.userid,
+            });
+          } else {
+            navigation("/employee-dashboard", {
+              userType: res?.user_type,
+              userId: res?.userid,
+            });
+          }
+        })
+        .catch((err: any) => {
+          toast.error(err?.data?.message);
+        });
     },
   });
 
   return (
     <div className="login-container">
-
       <div className="login-form">
         <h2>Login</h2>
         <form onSubmit={formik.handleSubmit}>
@@ -64,7 +94,6 @@ const LoginScreen = () => {
         </form>
       </div>
 
-     
       <div className="login-image">
         <img src={LoginImg} alt="Login Illustration" />
       </div>
