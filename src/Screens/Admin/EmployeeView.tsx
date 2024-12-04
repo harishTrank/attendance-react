@@ -11,6 +11,24 @@ import RegulariseEmp from "../Employees/RegulariseEmp";
 const EmployeeView = () => {
   const [activeTab, setActiveTab]: any = useState("Dashboard");
   const { pathname } = useLocation();
+  const [logoutEmp, setLogoutEmp]: any = useState(false);
+
+  const handleLogoutEmp = (action: any) => {
+    if (action === "cancel") {
+      setLogoutEmp(false); // Close the popup
+    } else if (action === "confirm") {
+      console.log("User logged out");
+      setLogoutEmp(false);
+    }
+  };
+
+  const handleTabChange = (tab: string) => {
+    if (tab === "Logout") {
+      setLogoutEmp(true); 
+    } else {
+      setActiveTab(tab); 
+    }
+  };
 
   return (
     <div className="flex">
@@ -24,7 +42,7 @@ const EmployeeView = () => {
         <EmpTabForAdmin
           pathname={pathname}
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={handleTabChange} // Use the updated handler
         />
         {activeTab === "Dashboard" ? (
           <DashboardEmp />
@@ -34,10 +52,25 @@ const EmployeeView = () => {
           <ViewAttendaceEmp />
         ) : activeTab === "Regularization" ? (
           <RegulariseEmp />
-        ) : (
+        ) : activeTab === "Profile" ? (
           <ProfileEmp />
-        )}
+        ) : null}
       </div>
+      {logoutEmp && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Are you sure you want to logout?</p>
+            <div className="modal-actions">
+              <button onClick={() => handleLogoutEmp("cancel")} className="confirm-btn">
+                No
+              </button>
+              <button onClick={() => handleLogoutEmp("confirm")} className="cancel-btn">
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
