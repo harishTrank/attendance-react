@@ -7,26 +7,39 @@ import ViewAttendaceEmp from "../Employees/ViewAttendaceEmp";
 import ProfileEmp from "../Employees/ProfileEmp";
 import { useLocation } from "react-router-dom";
 import RegulariseEmp from "../Employees/RegulariseEmp";
+import { userLogoutApi } from "../../store/Services";
+import { globalUserType } from "../../JotaiStore";
+import { useAtom } from "jotai";
+import { toast } from "react-hot-toast";
 
 const EmployeeView = () => {
   const [activeTab, setActiveTab]: any = useState("Dashboard");
   const { pathname } = useLocation();
   const [logoutEmp, setLogoutEmp]: any = useState(false);
+  const [, setGlobalUserTypeAtom]: any = useAtom(globalUserType);
 
   const handleLogoutEmp = (action: any) => {
     if (action === "cancel") {
       setLogoutEmp(false); // Close the popup
     } else if (action === "confirm") {
-      console.log("User logged out");
+      userLogoutApi()
+        .then(() => {
+          setGlobalUserTypeAtom(null);
+          sessionStorage.clear();
+          toast.success("Logout user successfully");
+        })
+        .catch((err: any) => {
+          console.log("err", err);
+        });
       setLogoutEmp(false);
     }
   };
 
   const handleTabChange = (tab: string) => {
     if (tab === "Logout") {
-      setLogoutEmp(true); 
+      setLogoutEmp(true);
     } else {
-      setActiveTab(tab); 
+      setActiveTab(tab);
     }
   };
 
@@ -61,10 +74,16 @@ const EmployeeView = () => {
           <div className="modal">
             <p>Are you sure you want to logout?</p>
             <div className="modal-actions">
-              <button onClick={() => handleLogoutEmp("cancel")} className="confirm-btn">
+              <button
+                onClick={() => handleLogoutEmp("cancel")}
+                className="confirm-btn"
+              >
                 No
               </button>
-              <button onClick={() => handleLogoutEmp("confirm")} className="cancel-btn">
+              <button
+                onClick={() => handleLogoutEmp("confirm")}
+                className="cancel-btn"
+              >
                 Yes
               </button>
             </div>
