@@ -4,7 +4,11 @@ import Sidebar from "../../ReuseableComponent/Sidebar";
 import { useNavigate } from "react-router";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { createEmployeeApi, listEmployeesApi } from "../../store/Services";
+import {
+  createEmployeeApi,
+  deleteEmployeeApi,
+  listEmployeesApi,
+} from "../../store/Services";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { toast } from "react-hot-toast";
@@ -25,6 +29,7 @@ const EmployeeTab = () => {
   const [currentPage, setCurrentPage]: any = useState(1);
   const [employeeList, setEmployeeList]: any = useState([]);
   const [totalPages, setTotalPages]: any = useState(0);
+  const [uuid, setUuid]: any = useState(null);
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
@@ -59,12 +64,28 @@ const EmployeeTab = () => {
     confirmPassword: "",
     address: "",
   };
-  const handledeletepopup = () => {
-    setDeletePopup(true);
+
+  const DeleteButtonHandler = () => {
+    deleteEmployeeApi({
+      query: {
+        uuid,
+      },
+    })
+      .then(() => {
+        toast.success("Delete user successfully.");
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+      });
   };
-  const closedeletepoup = () => {
+
+  const closedeletepoup = (value: any) => {
     setDeletePopup(false);
+    if (value) {
+      DeleteButtonHandler();
+    }
   };
+
   const openPopup = () => {
     setEmployeePopup(true);
   };
@@ -74,32 +95,6 @@ const EmployeeTab = () => {
 
   const toggleEditPopup = () => {
     setEditPopup(!editPopup);
-  };
-  const addEmployeesubmit = (values: any) => {
-    setIsLoading(true);
-    createEmployeeApi({
-      body: {
-        first_name: values?.firstName,
-        last_name: values?.lastName,
-        email: values?.email,
-        phone_number: values?.contact,
-        gender: values?.gender,
-        dob: dayjs(values?.dob).format("YYYY-MM-DD"),
-        joining_date: dayjs(values?.doj).format("YYYY-MM-DD"),
-        designation: values?.designation,
-        address: values?.address,
-        password: values?.password,
-      },
-    })
-      .then((res: any) => {
-        toast.success(res?.responsemessage);
-        setEmployeePopup(false);
-        setIsLoading(false);
-      })
-      .catch((err: any) => {
-        toast.error("This email already exits.");
-        setIsLoading(false);
-      });
   };
 
   const fetchEmployees = () => {
@@ -118,6 +113,34 @@ const EmployeeTab = () => {
         console.error("Error fetching employees:", err);
       })
       .finally(() => setIsLoading(false));
+  };
+
+  const addEmployeesubmit = (values: any) => {
+    setIsLoading(true);
+    createEmployeeApi({
+      body: {
+        first_name: values?.firstName,
+        last_name: values?.lastName,
+        email: values?.email,
+        phone_number: values?.contact,
+        gender: values?.gender,
+        dob: dayjs(values?.dob).format("YYYY-MM-DD"),
+        joining_date: dayjs(values?.doj).format("YYYY-MM-DD"),
+        designation: values?.designation,
+        address: values?.address,
+        password: values?.password,
+      },
+    })
+      .then((res: any) => {
+        toast.success(res?.responsemessage);
+        fetchEmployees();
+        setEmployeePopup(false);
+        setIsLoading(false);
+      })
+      .catch((err: any) => {
+        toast.error("This email already exits.");
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -364,7 +387,13 @@ const EmployeeTab = () => {
                             onClick={toggleEditPopup}
                           ></i>
                         </button>
-                        <button className="delete" onClick={handledeletepopup}>
+                        <button
+                          className="delete"
+                          onClick={() => {
+                            setDeletePopup(true);
+                            setUuid(item?.uuid);
+                          }}
+                        >
                           <i className="fa-solid fa-trash"></i>
                         </button>
                       </div>
@@ -391,11 +420,17 @@ const EmployeeTab = () => {
           <div className="modal">
             <p>Are you sure you want to delete user information?</p>
             <div className="modal-actions">
-              <button onClick={closedeletepoup} className="confirm-btn">
-                Yes
-              </button>
-              <button onClick={closedeletepoup} className="cancel-btn">
+              <button
+                onClick={() => closedeletepoup(false)}
+                className="cancel-btn"
+              >
                 No
+              </button>
+              <button
+                onClick={() => closedeletepoup(true)}
+                className="confirm-btn"
+              >
+                Yes
               </button>
             </div>
           </div>

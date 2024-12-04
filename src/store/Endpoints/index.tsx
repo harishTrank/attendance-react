@@ -36,4 +36,18 @@ export const apiUrls = {
       uri: "employee-list/",
     },
   },
+  deleteEmployee: {
+    v1: {
+      ...defaults.methods.DELETE,
+      ...defaults.versions.v1,
+      uri: "delete-employee/",
+    },
+  },
+  createAnouncements: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "anouncement/",
+    },
+  },
 };
