@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import LoginImg from "../../images/loginimg.jpg";
@@ -7,10 +7,12 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { globalUserType } from "../../JotaiStore";
 import { useAtom } from "jotai";
+import FullScreenLoader from "../../ReuseableComponent/FullScreenLoader";
 
 const LoginScreen = () => {
   const navigation: any = useNavigate();
   const [, setGlobalUserTypeAtom] = useAtom(globalUserType);
+  const [isLoading, setIsLoading]: any = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,6 +28,7 @@ const LoginScreen = () => {
     }),
     onSubmit: (body) => {
       console.log("Form values:", body);
+      setIsLoading(true);
       userLoginApi({
         body,
       })
@@ -46,15 +49,18 @@ const LoginScreen = () => {
               userId: res?.userid,
             });
           }
+          setIsLoading(false);
         })
         .catch((err: any) => {
           toast.error(err?.data?.message);
+          setIsLoading(false);
         });
     },
   });
 
   return (
     <div className="login-container">
+      <FullScreenLoader loading={isLoading} />
       <div className="login-form">
         <h2>Login</h2>
         <form onSubmit={formik.handleSubmit}>
