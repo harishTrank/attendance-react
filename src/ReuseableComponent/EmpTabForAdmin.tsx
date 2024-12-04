@@ -19,6 +19,11 @@ const adminTab: any = [
     name: "Profile",
     icon: "fa-solid fa-user-tie",
   },
+  {
+    name: "Logout",
+    icon: "fa-solid fa-right-from-bracket",
+  },
+
 ];
 
 const employeeTab = [
