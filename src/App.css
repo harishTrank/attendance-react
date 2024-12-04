@@ -186,13 +186,14 @@ width: 200px;
 .popup {
   background: #fff;
   border-radius: 10px;
+  height: 690px;
   padding: 30px;
   width: 500px;
-  
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
+  overflow-x: scroll;
 }
 
 /* Close Button */
