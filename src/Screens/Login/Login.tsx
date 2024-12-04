@@ -28,7 +28,7 @@ const LoginScreen = () => {
       <div className="login-form">
         <h2>Login</h2>
         <form onSubmit={formik.handleSubmit}>
-          <div className="form-group">
+          <div className="form-group-login">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -43,7 +43,7 @@ const LoginScreen = () => {
               <div className="error">{formik.errors.email}</div>
             ) : null}
           </div>
-          <div className="form-group">
+          <div className="form-group-login">
             <label htmlFor="password">Password</label>
             <input
               type="password"

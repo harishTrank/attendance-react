@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Dashboard.css";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import { useNavigate } from "react-router";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const EmployeeTab = () => {
   const navigate = useNavigate();
@@ -16,6 +18,41 @@ const EmployeeTab = () => {
   const [editPopup,setEditPopup]:any=useState(false)
 
 
+
+
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required("First Name is required"),
+    lastName: Yup.string().required("Last Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    contact: Yup.string()
+      .matches(/^[0-9]+$/, "Contact must be a number")
+      .required("Contact is required"),
+    gender: Yup.string().required("Gender is required"),
+    dob: Yup.date().required("Date of Birth is required"),
+    doj: Yup.date().required("Date of Joining is required"),
+    designation: Yup.string().required("Designation is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm Password is required"),
+    address: Yup.string().required("Address is required"),
+  });
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    gender: "",
+    dob: "",
+    doj: "",
+    designation: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+  };
   const handledeletepopup=()=>{
     setDeletePopup(true)
   }
@@ -31,6 +68,9 @@ const EmployeeTab = () => {
 
   const toggleEditPopup=()=>{
     setEditPopup(!editPopup)
+  }
+  const addEmployeesubmit=()=>{
+    alert('submittes')
   }
   return (
     <>
@@ -58,108 +98,124 @@ const EmployeeTab = () => {
               </div>
             </div>
             {employeePopup && (
-        <div className="popup-overlay">
+          <div className="popup-overlay">
           <div className="popup">
             <button className="close-button" onClick={closePopup}>
               ✖
             </button>
             <h2>Add Employee</h2>
-            <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>First Name</label>
-              <input
-                type="text"
-                placeholder="Enter first name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Last Name</label>
-              <input
-                type="text"
-                placeholder="Enter last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
-            </div>
-            </div>
-            <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label >Contact</label>
-              <input type="text" />
-            </div>
-            
-            </div>
-            <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Gender</label>
-             <select name="" id="">
-              <option value="">Male</option>
-              <option value="">Female</option>
-              <option value="">Others</option>
-             </select>
-            </div>
-            <div className="form-group">
-              <label >Date of Birth</label>
-              <input type="date" />
-            </div>
-            
-            </div>
-            <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Date of Joining</label>
-             <input type="date" />
-            </div>
-            <div className="form-group">
-              <label >Designation</label>
-              <input type="text" />
-            </div>
-            
-            </div>
-            <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="text"
-                placeholder="Enter first name"
-               
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Confirm Password</label>
-              <input
-                type="text"
-                placeholder="Enter last name"
-              
-                required
-              />
-            </div>
-            </div>
-            <div className="form-group-textarea">
-              <label>Address</label>
-              <textarea name="" id="" rows={4} cols={50}></textarea>
-            </div>
-           
-            <div className="form-actions">
-            <button >Cancel</button>
-              <button >Submit</button>
-             
-             
-            </div>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+             onSubmit={addEmployeesubmit}
+            >
+              {() => (
+                <Form>
+                  <div className="flex space-bw alc">
+                    <div className="form-group">
+                      <label>First Name</label>
+                      <Field
+                        type="text"
+                        name="firstName"
+                        placeholder="Enter first name"
+                      />
+                      <ErrorMessage name="firstName" component="div" className="error" />
+                    </div>
+                    <div className="form-group">
+                      <label>Last Name</label>
+                      <Field
+                        type="text"
+                        name="lastName"
+                        placeholder="Enter last name"
+                      />
+                      <ErrorMessage name="lastName" component="div" className="error" />
+                    </div>
+                  </div>
+    
+                  <div className="flex space-bw alc">
+                    <div className="form-group">
+                      <label>Email</label>
+                      <Field
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                      />
+                      <ErrorMessage name="email" component="div" className="error" />
+                    </div>
+                    <div className="form-group">
+                      <label>Contact</label>
+                      <Field type="text" name="contact" />
+                      <ErrorMessage name="contact" component="div" className="error" />
+                    </div>
+                  </div>
+    
+                  <div className="flex space-bw alc">
+                    <div className="form-group">
+                      <label>Gender</label>
+                      <Field as="select" name="gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                      </Field>
+                      <ErrorMessage name="gender" component="div" className="error" />
+                    </div>
+                    <div className="form-group">
+                      <label>Date of Birth</label>
+                      <Field type="date" name="dob" />
+                      <ErrorMessage name="dob" component="div" className="error" />
+                    </div>
+                  </div>
+    
+                  <div className="flex space-bw alc">
+                    <div className="form-group">
+                      <label>Date of Joining</label>
+                      <Field type="date" name="doj" />
+                      <ErrorMessage name="doj" component="div" className="error" />
+                    </div>
+                    <div className="form-group">
+                      <label>Designation</label>
+                      <Field type="text" name="designation" />
+                      <ErrorMessage name="designation" component="div" className="error" />
+                    </div>
+                  </div>
+    
+                  <div className="flex space-bw alc">
+                    <div className="form-group">
+                      <label>Password</label>
+                      <Field
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                      />
+                      <ErrorMessage name="password" component="div" className="error" />
+                    </div>
+                    <div className="form-group">
+                      <label>Confirm Password</label>
+                      <Field
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm password"
+                      />
+                      <ErrorMessage name="confirmPassword" component="div" className="error" />
+                    </div>
+                  </div>
+    
+                  <div className="form-group-textarea">
+                    <label>Address</label>
+                    <Field as="textarea" name="address" rows={4} cols={50} />
+                    <ErrorMessage name="address" component="div" className="error" />
+                  </div>
+    
+                  <div className="form-actions">
+                    <button type="button" onClick={closePopup}>
+                      Cancel
+                    </button>
+                    <button type="submit">Submit</button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       )}

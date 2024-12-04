@@ -223,7 +223,7 @@ width: 200px;
 .form-group {
   margin-bottom: 15px;
   text-align: left;
-  width: 100%;
+  width: 48%;
   
 }
 
@@ -650,17 +650,17 @@ button {
   color: #333;
 }
 
-.form-group {
+.form-group-login {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group-login label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.form-group input {
+.form-group-login input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
