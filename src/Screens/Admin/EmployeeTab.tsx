@@ -65,27 +65,6 @@ const EmployeeTab = () => {
     address: "",
   };
 
-  const DeleteButtonHandler = () => {
-    deleteEmployeeApi({
-      query: {
-        uuid,
-      },
-    })
-      .then(() => {
-        toast.success("Delete user successfully.");
-      })
-      .catch(() => {
-        toast.error("Something went wrong.");
-      });
-  };
-
-  const closedeletepoup = (value: any) => {
-    setDeletePopup(false);
-    if (value) {
-      DeleteButtonHandler();
-    }
-  };
-
   const openPopup = () => {
     setEmployeePopup(true);
   };
@@ -113,6 +92,21 @@ const EmployeeTab = () => {
         console.error("Error fetching employees:", err);
       })
       .finally(() => setIsLoading(false));
+  };
+
+  const DeleteButtonHandler = () => {
+    deleteEmployeeApi({
+      query: {
+        uuid,
+      },
+    })
+      .then(() => {
+        toast.success("Delete user successfully.");
+        fetchEmployees();
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+      });
   };
 
   const addEmployeesubmit = (values: any) => {
@@ -156,6 +150,13 @@ const EmployeeTab = () => {
   const onChangeSearch = (e: any) => {
     setSearch(e.target.value);
     setCurrentPage(1);
+  };
+
+  const closedeletepoup = (value: any) => {
+    setDeletePopup(false);
+    if (value) {
+      DeleteButtonHandler();
+    }
   };
   return (
     <>
