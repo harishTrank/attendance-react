@@ -21,7 +21,7 @@ export const makeUrl = (
     .join("/")}${query ? `?${queryString.stringify(query)}` : ""}`;
 
 export const getDefaultHeaders = async (multipart: boolean) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = sessionStorage.getItem("accessToken");
   const contentType =
     multipart === true ? "multipart/form-data" : "application/json";
 

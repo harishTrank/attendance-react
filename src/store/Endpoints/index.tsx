@@ -15,4 +15,11 @@ export const apiUrls = {
       uri: "logout/",
     },
   },
+  createEmployee: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "create-employee/",
+    },
+  },
 };
