@@ -22,4 +22,13 @@ export const apiUrls = {
       uri: "create-employee/",
     },
   },
+  Employeelist: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "employee-list/",
+    },
+  },
 };
+  
+
