@@ -5,7 +5,7 @@ import EmpTabForAdmin from "../../ReuseableComponent/EmpTabForAdmin";
 import ApplyLeave from "../Employees/ApplyLeave";
 import ViewAttendaceEmp from "../Employees/ViewAttendaceEmp";
 import ProfileEmp from "../Employees/ProfileEmp";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import RegulariseEmp from "../Employees/RegulariseEmp";
 import { userLogoutApi } from "../../store/Services";
 import { globalUserType } from "../../JotaiStore";
@@ -15,6 +15,7 @@ import { toast } from "react-hot-toast";
 const EmployeeView = () => {
   const [activeTab, setActiveTab]: any = useState("Dashboard");
   const { pathname } = useLocation();
+  const { id } = useParams();
   const [logoutEmp, setLogoutEmp]: any = useState(false);
   const [, setGlobalUserTypeAtom]: any = useAtom(globalUserType);
 
@@ -66,7 +67,7 @@ const EmployeeView = () => {
         ) : activeTab === "Regularization" ? (
           <RegulariseEmp />
         ) : activeTab === "Profile" ? (
-          <ProfileEmp />
+          <ProfileEmp userId={id} />
         ) : null}
       </div>
       {logoutEmp && (

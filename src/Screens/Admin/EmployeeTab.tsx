@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import { useNavigate } from "react-router";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { createEmployeeApi } from "../../store/Services";
+import {
+  createEmployeeApi,
+  deleteEmployeeApi,
+  listEmployeesApi,
+} from "../../store/Services";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { toast } from "react-hot-toast";
 import FullScreenLoader from "../../ReuseableComponent/FullScreenLoader";
+import { Pagination } from "antd";
 
 dayjs.extend(relativeTime);
 const EmployeeTab = () => {
@@ -20,6 +25,11 @@ const EmployeeTab = () => {
   const [deletePopup, setDeletePopup]: any = useState(false);
   const [editPopup, setEditPopup]: any = useState(false);
   const [isLoading, setIsLoading]: any = useState(false);
+  const [search, setSearch]: any = useState("");
+  const [currentPage, setCurrentPage]: any = useState(1);
+  const [employeeList, setEmployeeList]: any = useState([]);
+  const [totalPages, setTotalPages]: any = useState(0);
+  const [uuid, setUuid]: any = useState(null);
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
@@ -54,12 +64,7 @@ const EmployeeTab = () => {
     confirmPassword: "",
     address: "",
   };
-  const handledeletepopup = () => {
-    setDeletePopup(true);
-  };
-  const closedeletepoup = () => {
-    setDeletePopup(false);
-  };
+
   const openPopup = () => {
     setEmployeePopup(true);
   };
@@ -70,6 +75,40 @@ const EmployeeTab = () => {
   const toggleEditPopup = () => {
     setEditPopup(!editPopup);
   };
+
+  const fetchEmployees = () => {
+    setIsLoading(true);
+    listEmployeesApi({
+      query: {
+        search,
+        page: currentPage,
+      },
+    })
+      .then((res: any) => {
+        setEmployeeList(res?.results || []);
+        setTotalPages(res?.total_pages || 0);
+      })
+      .catch((err) => {
+        console.error("Error fetching employees:", err);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const DeleteButtonHandler = () => {
+    deleteEmployeeApi({
+      query: {
+        uuid,
+      },
+    })
+      .then(() => {
+        toast.success("Delete user successfully.");
+        fetchEmployees();
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+      });
+  };
+
   const addEmployeesubmit = (values: any) => {
     setIsLoading(true);
     createEmployeeApi({
@@ -88,6 +127,7 @@ const EmployeeTab = () => {
     })
       .then((res: any) => {
         toast.success(res?.responsemessage);
+        fetchEmployees();
         setEmployeePopup(false);
         setIsLoading(false);
       })
@@ -95,6 +135,28 @@ const EmployeeTab = () => {
         toast.error("This email already exits.");
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetchEmployees();
+    }, 500);
+  }, [currentPage, search]);
+
+  const onPageChange = (page: any) => {
+    setCurrentPage(page);
+  };
+
+  const onChangeSearch = (e: any) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const closedeletepoup = (value: any) => {
+    setDeletePopup(false);
+    if (value) {
+      DeleteButtonHandler();
+    }
   };
   return (
     <>
@@ -113,9 +175,8 @@ const EmployeeTab = () => {
                 <div className="pos-relate">
                   <input
                     type="text"
-                    name=""
-                    id=""
-                    placeholder="Enter Employee Name"
+                    onChange={onChangeSearch}
+                    placeholder="Search"
                   />
                   <i className="fa-solid fa-magnifying-glass"></i>
                 </div>
@@ -293,65 +354,66 @@ const EmployeeTab = () => {
               </div>
             )}
             <table>
-              <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Department</th>
-                <th>In Time</th>
-                <th>Out Time</th>
-                <th>Total Hours</th>
-                <th>Options</th>
-              </tr>
-              <tr>
-                <td>Harsh</td>
-                <td>Front end developer</td>
-                <td>IT</td>
-                <td>10:00 AM</td>
-                <td>07:00 PM</td>
-                <td>09:00 Hrs</td>
-                <td>
-                  <div className="flex alc just-center">
-                    <button className="view" onClick={() => viewUserHandler(1)}>
-                      <i className="fa-solid fa-eye"></i>
-                    </button>
-                    <button className="edit">
-                      <i
-                        className="fa-solid fa-user-pen"
-                        onClick={toggleEditPopup}
-                      ></i>
-                    </button>
-                    <button className="delete" onClick={handledeletepopup}>
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Harish</td>
-                <td>Full stack developer</td>
-                <td>IT</td>
-                <td>10:00 AM</td>
-                <td>07:00 PM</td>
-                <td>09:00 Hrs</td>
-                <td>
-                  <div className="flex alc just-center">
-                    <button className="view" onClick={() => viewUserHandler(2)}>
-                      <i className="fa-solid fa-eye"></i>
-                    </button>
-                    <button className="edit">
-                      <i
-                        className="fa-solid fa-user-pen"
-                        onClick={() => toggleEditPopup()}
-                      ></i>
-                    </button>
-                    <button className="delete">
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Gender</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                {employeeList?.map((item: any, index: any) => (
+                  <tr key={index}>
+                    <td>
+                      {item?.first_name} {item?.last_name}
+                    </td>
+                    <td>{item?.designation}</td>
+                    <td>{item?.gender}</td>
+                    <td>{item?.phone_number}</td>
+                    <td>{item?.email}</td>
+                    <td>
+                      <div className="flex alc just-center">
+                        <button
+                          className="view"
+                          onClick={() => viewUserHandler(item?.uuid)}
+                        >
+                          <i className="fa-solid fa-eye"></i>
+                        </button>
+                        <button className="edit">
+                          <i
+                            className="fa-solid fa-user-pen"
+                            onClick={toggleEditPopup}
+                          ></i>
+                        </button>
+                        <button
+                          className="delete"
+                          onClick={() => {
+                            setDeletePopup(true);
+                            setUuid(item?.uuid);
+                          }}
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
+
+          {totalPages > 1 && (
+            <Pagination
+              current={currentPage}
+              total={totalPages * 10}
+              onChange={onPageChange}
+              showSizeChanger={false}
+              align="center"
+            />
+          )}
         </div>
       </div>
       {deletePopup && (
@@ -359,11 +421,17 @@ const EmployeeTab = () => {
           <div className="modal">
             <p>Are you sure you want to delete user information?</p>
             <div className="modal-actions">
-              <button onClick={closedeletepoup} className="confirm-btn">
-                Yes
-              </button>
-              <button onClick={closedeletepoup} className="cancel-btn">
+              <button
+                onClick={() => closedeletepoup(false)}
+                className="cancel-btn"
+              >
                 No
+              </button>
+              <button
+                onClick={() => closedeletepoup(true)}
+                className="confirm-btn"
+              >
+                Yes
               </button>
             </div>
           </div>

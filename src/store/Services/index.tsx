@@ -17,3 +17,27 @@ export const createEmployeeApi = ({ body }: any) =>
     uriEndPoint: apiUrls.createEmployee.v1,
     body,
   });
+
+export const getParticularEmployee = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.getParticularEmployee.v1,
+    query,
+  });
+
+export const listEmployeesApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.listEmployees.v1,
+    query,
+  });
+
+export const createAnouncementsApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.createAnouncements.v1,
+    body,
+  });
+
+export const deleteEmployeeApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.deleteEmployee.v1,
+    query,
+  });
