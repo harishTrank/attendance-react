@@ -44,7 +44,7 @@ const LoginScreen = () => {
               userId: res?.userid,
             });
           } else {
-            navigation("/employee-dashboard", {
+            navigation(`/employee-dashboard`, {
               userType: res?.user_type,
               userId: res?.userid,
             });

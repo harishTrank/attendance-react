@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import { useNavigate } from "react-router";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import {
   createEmployeeApi,
   deleteEmployeeApi,
+  editEmployeeApi,
   listEmployeesApi,
 } from "../../store/Services";
 import dayjs from "dayjs";
@@ -30,6 +31,7 @@ const EmployeeTab = () => {
   const [employeeList, setEmployeeList]: any = useState([]);
   const [totalPages, setTotalPages]: any = useState(0);
   const [uuid, setUuid]: any = useState(null);
+  const [editUserData, setEditUserData]: any = useState({});
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
@@ -158,6 +160,87 @@ const EmployeeTab = () => {
       DeleteButtonHandler();
     }
   };
+
+  const [initialValuesEdit, setInitialValuesEdit]: any = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    gender: "",
+    dateOfBirth: "",
+    dateOfJoining: "",
+    designation: "",
+    address: "",
+  });
+
+  useEffect(() => {
+    if (editUserData) {
+      setInitialValuesEdit({
+        firstName: editUserData?.first_name || "",
+        lastName: editUserData?.last_name || "",
+        email: editUserData?.email || "",
+        contact: editUserData?.phone_number || "",
+        gender: editUserData?.gender || "",
+        dateOfBirth: editUserData?.dob
+          ? dayjs(editUserData?.dob).format("YYYY-MM-DD")
+          : "",
+        dateOfJoining: editUserData?.joining_date
+          ? dayjs(editUserData?.joining_date).format("YYYY-MM-DD")
+          : "",
+        designation: editUserData?.designation || "",
+        address: editUserData?.address || "",
+      });
+    }
+  }, [editUserData]);
+
+  const formik = useFormik({
+    initialValues: initialValuesEdit,
+    enableReinitialize: true, // Add this line to reinitialize Formik on initialValues change
+    validationSchema: Yup.object({
+      firstName: Yup.string()
+        .min(2, "First Name must be at least 2 characters")
+        .required("First Name is required"),
+      lastName: Yup.string()
+        .min(2, "Last Name must be at least 2 characters")
+        .required("Last Name is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      contact: Yup.string()
+        .matches(/^[0-9]+$/, "Contact must be numeric")
+        .min(10, "Contact must be at least 10 digits")
+        .required("Contact is required"),
+      gender: Yup.string().required("Gender is required"),
+      dateOfBirth: Yup.date().required("Date of Birth is required"),
+      dateOfJoining: Yup.date().required("Date of Joining is required"),
+      designation: Yup.string().required("Designation is required"),
+      address: Yup.string().min(10, "Address must be at least 10 characters"),
+    }),
+    onSubmit: (values) => {
+      setCurrentPage(1);
+      editEmployeeApi({
+        query: {
+          uuid: editUserData?.uuid,
+        },
+        body: {
+          first_name: values?.firstName,
+          last_name: values?.lastName,
+          phone_number: values?.contact,
+          gender: values?.gender,
+          dob: dayjs(values?.dob).format("YYYY-MM-DD"),
+          joining_date: dayjs(values?.joining_date).format("YYYY-MM-DD"),
+          designation: values?.designation,
+          address: values?.address,
+        },
+      })
+        .then(() => {
+          toast.success("Edit user successfully.");
+          toggleEditPopup();
+          fetchEmployees();
+        })
+        .catch((err: any) => console.log("err", err));
+    },
+  });
   return (
     <>
       <div className="flex">
@@ -385,7 +468,14 @@ const EmployeeTab = () => {
                         <button className="edit">
                           <i
                             className="fa-solid fa-user-pen"
-                            onClick={toggleEditPopup}
+                            onClick={() => {
+                              setIsLoading(true);
+                              setEditUserData(item);
+                              setTimeout(() => {
+                                setIsLoading(false);
+                                toggleEditPopup();
+                              }, 1000);
+                            }}
                           ></i>
                         </button>
                         <button
@@ -447,59 +537,165 @@ const EmployeeTab = () => {
             ✖
           </button>
           <h2>Edit Employee Details</h2>
-          <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>First Name</label>
-              <input type="text" placeholder="Enter first name" required />
+          <form onSubmit={formik.handleSubmit}>
+            <div className="flex space-bw alc">
+              <div className="form-group">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter first name"
+                  name="firstName"
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.firstName &&
+                  typeof formik.errors.firstName === "string" && (
+                    <div className="error">{formik.errors.firstName}</div>
+                  )}
+              </div>
+              <div className="form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter last name"
+                  name="lastName"
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.lastName &&
+                  typeof formik.errors.lastName === "string" && (
+                    <div className="error">{formik.errors.lastName}</div>
+                  )}
+              </div>
             </div>
-            <div className="form-group">
-              <label>Last Name</label>
-              <input type="text" placeholder="Enter last name" required />
-            </div>
-          </div>
-          <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="Enter email" required />
-            </div>
-            <div className="form-group">
-              <label>Contact</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Gender</label>
-              <select name="" id="">
-                <option value="">Male</option>
-                <option value="">Female</option>
-                <option value="">Others</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Date of Birth</label>
-              <input type="date" />
-            </div>
-          </div>
-          <div className="flex space-bw alc">
-            <div className="form-group">
-              <label>Date of Joining</label>
-              <input type="date" />
-            </div>
-            <div className="form-group">
-              <label>Designation</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div className="form-group-textarea">
-            <label>Address</label>
-            <textarea name="" id="" rows={4} cols={50}></textarea>
-          </div>
 
-          <div className="form-actions">
-            <button>Submit</button>
-            <button>Cancel</button>
-          </div>
+            <div className="flex space-bw alc">
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  readOnly
+                />
+                {formik.touched.email &&
+                  typeof formik.errors.email === "string" && (
+                    <div className="error">{formik.errors.email}</div>
+                  )}
+              </div>
+              <div className="form-group">
+                <label>Contact</label>
+                <input
+                  type="text"
+                  placeholder="Enter contact number"
+                  name="contact"
+                  value={formik.values.contact}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.contact &&
+                  typeof formik.errors.contact === "string" && (
+                    <div className="error">{formik.errors.contact}</div>
+                  )}
+              </div>
+            </div>
+
+            <div className="flex space-bw alc">
+              <div className="form-group">
+                <label>Gender</label>
+                <select
+                  name="gender"
+                  value={formik.values.gender}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
+                </select>
+                {formik.touched.gender &&
+                  typeof formik.errors.gender === "string" && (
+                    <div className="error">{formik.errors.gender}</div>
+                  )}
+              </div>
+              <div className="form-group">
+                <label>Date of Birth</label>
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  value={formik.values.dateOfBirth}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.dateOfBirth &&
+                  typeof formik.errors.dateOfBirth === "string" && (
+                    <div className="error">{formik.errors.dateOfBirth}</div>
+                  )}
+              </div>
+            </div>
+
+            <div className="flex space-bw alc">
+              <div className="form-group">
+                <label>Date of Joining</label>
+                <input
+                  type="date"
+                  name="dateOfJoining"
+                  value={formik.values.dateOfJoining}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.dateOfJoining &&
+                  typeof formik.errors.dateOfJoining === "string" && (
+                    <div className="error">{formik.errors.dateOfJoining}</div>
+                  )}
+              </div>
+              <div className="form-group">
+                <label>Designation</label>
+                <input
+                  type="text"
+                  name="designation"
+                  placeholder="Enter designation"
+                  value={formik.values.designation}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.designation &&
+                  typeof formik.errors.designation === "string" && (
+                    <div className="error">{formik.errors.designation}</div>
+                  )}
+              </div>
+            </div>
+
+            <div className="form-group-textarea">
+              <label>Address</label>
+              <textarea
+                name="address"
+                rows={4}
+                cols={50}
+                placeholder="Enter address"
+                value={formik.values.address}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              ></textarea>
+              {formik.touched.address &&
+                typeof formik.errors.address === "string" && (
+                  <div className="error">{formik.errors.address}</div>
+                )}
+            </div>
+
+            <div className="form-actions">
+              <button type="submit">Submit</button>
+              <button type="button" onClick={toggleEditPopup}>
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createAnouncementsApi } from "../../store/Services";
+import {
+  createAnouncementsApi,
+  listAnouncementsApi,
+} from "../../store/Services";
 import { toast } from "react-hot-toast";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { Pagination } from "antd";
+import AnounceMentList from "../../ReuseableComponent/AnounceMentList";
 
+dayjs.extend(relativeTime);
 const Anouncement = () => {
+  const [refetchList, setRefetchList]: any = useState(false);
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -29,12 +38,14 @@ const Anouncement = () => {
         .then((res: any) => {
           toast.success("Anouncement Created successfully.");
           resetForm();
+          setRefetchList(true);
         })
         .catch((err: any) => {
           toast.error("Something went wrong");
         });
     },
   });
+
   return (
     <div className="flex">
       <Sidebar current={"Anouncement"} />
@@ -76,23 +87,10 @@ const Anouncement = () => {
             </div>
           </form>
         </div>
-        <div className="all-employees anouncement-table">
-          <h3>List of Anouncements:</h3>
-          <table>
-            <tr>
-              <th style={{ borderRight: "1px solid #fff" }}>Created At</th>
-              <th>Description</th>
-            </tr>
-            <tr>
-              <td>Aug. 5, 2024, 7 p.m.</td>
-              <td>Hello wassup</td>
-            </tr>
-            <tr>
-              <td>Aug. 5, 2024, 7 p.m.</td>
-              <td>Hello wassup</td>
-            </tr>
-          </table>
-        </div>
+        <AnounceMentList
+          refetchList={refetchList}
+          setRefetchList={setRefetchList}
+        />
       </div>
     </div>
   );

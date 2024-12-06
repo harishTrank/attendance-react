@@ -41,3 +41,16 @@ export const deleteEmployeeApi = ({ query }: any) =>
     uriEndPoint: apiUrls.deleteEmployee.v1,
     query,
   });
+
+export const listAnouncementsApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.listAnouncements.v1,
+    query,
+  });
+
+export const editEmployeeApi = ({ query, body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.editEmployee.v1,
+    query,
+    body,
+  });
