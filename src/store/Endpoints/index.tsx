@@ -43,11 +43,25 @@ export const apiUrls = {
       uri: "delete-employee/",
     },
   },
+  editEmployee: {
+    v1: {
+      ...defaults.methods.PATCH,
+      ...defaults.versions.v1,
+      uri: "edit-employee/",
+    },
+  },
   createAnouncements: {
     v1: {
       ...defaults.methods.POST,
       ...defaults.versions.v1,
       uri: "anouncement/",
+    },
+  },
+  listAnouncements: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "all-anouncement/",
     },
   },
 };

@@ -1,3 +1,4 @@
+import AnounceMentList from "../../ReuseableComponent/AnounceMentList";
 import Barchart from "../../ReuseableComponent/Barchat";
 import EmployeeCalander from "../../ReuseableComponent/EmployeeCalander";
 
@@ -71,23 +72,7 @@ const DashboardEmp = () => {
           </tr>
         </table>
       </div>
-      <div className="all-employees anouncement-table">
-        <h3>List of Anouncements:</h3>
-        <table>
-          <tr>
-            <th style={{ borderRight: "1px solid #fff" }}>Created At</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td>Aug. 5, 2024, 7 p.m.</td>
-            <td>Hello wassup</td>
-          </tr>
-          <tr>
-            <td>Aug. 5, 2024, 7 p.m.</td>
-            <td>Hello wassup</td>
-          </tr>
-        </table>
-      </div>
+      <AnounceMentList />
     </>
   );
 };

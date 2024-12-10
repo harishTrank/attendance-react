@@ -28,6 +28,11 @@ const EmployeeView = () => {
           setGlobalUserTypeAtom(null);
           sessionStorage.clear();
           toast.success("Logout user successfully");
+          setTimeout(() => {
+            if (!window.location.pathname.includes("login")) {
+              window.location.reload();
+            }
+          }, 300);
         })
         .catch((err: any) => {
           console.log("err", err);

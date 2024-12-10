@@ -7,11 +7,10 @@ const ProfileEmp = ({ userId }: any) => {
   useEffect(() => {
     getParticularEmployee({
       query: {
-        uuid: userId,
+        uuid: userId || sessionStorage.getItem("userId"),
       },
     })
       .then((res: any) => {
-        console.log("res", res);
         setUserDetails(res?.data);
       })
       .catch((err: any) => {
