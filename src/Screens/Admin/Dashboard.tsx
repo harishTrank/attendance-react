@@ -3,7 +3,10 @@ import Linechart from "../../ReuseableComponent/Linechart";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import PieChartAdmin from "../../ReuseableComponent/PieChartAdmin";
 import { useEffect, useState } from "react";
-import { getAllAttendanceApi } from "../../store/Services";
+import {
+  adminDashboardAttendanceApi,
+  getAllAttendanceApi,
+} from "../../store/Services";
 import { Pagination } from "antd";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,6 +17,7 @@ const Dashboard = () => {
   const [attendanceList, setAttendanceList]: any = useState([]);
   const [currentPage, setCurrentPage]: any = useState(1);
   const [totalPages, setTotalPages]: any = useState(0);
+  const [userAttendance, setUserAttendace]: any = useState({});
   const fetchListAttendanceApi = () => {
     getAllAttendanceApi({
       query: {
@@ -37,6 +41,16 @@ const Dashboard = () => {
   const onPageChange = (page: any) => {
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    adminDashboardAttendanceApi()
+      .then((res: any) => {
+        setUserAttendace(res);
+      })
+      .catch((err: any) => {
+        console.log("err", err);
+      });
+  }, []);
   return (
     <>
       <div className="flex">
@@ -48,21 +62,21 @@ const Dashboard = () => {
                 <i className="fa-solid fa-basket-shopping"></i>
               </div>
               <p>Total Employees</p>
-              <h3>150</h3>
+              <h3>{userAttendance?.total}</h3>
             </div>
             <div className="stat-cards">
               <div className="icon green">
                 <i className="fa-solid fa-bag-shopping"></i>
               </div>
               <p>Present</p>
-              <h3>70</h3>
+              <h3>{userAttendance?.present}</h3>
             </div>
             <div className="stat-cards">
               <div className="icon red">
                 <i className="fa-solid fa-bag-shopping"></i>
               </div>
               <p>Absent</p>
-              <h3>05</h3>
+              <h3>{userAttendance?.absent}</h3>
             </div>
             <div className="stat-cards">
               <div className="icon pink">
@@ -77,7 +91,7 @@ const Dashboard = () => {
               <Linechart />
             </div>
             <div className="bar-chart col-40">
-              <PieChartAdmin />
+              <PieChartAdmin userAttendance={userAttendance} />
             </div>
           </div>
           <div className="all-employees">
