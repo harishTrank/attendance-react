@@ -85,3 +85,9 @@ export const listRegularizationApi = ({ query }: any) =>
     uriEndPoint: apiUrls.listRegularization.v1,
     query,
   });
+
+export const approvalRegularizationApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.approvalRegularization.v1,
+    body,
+  });

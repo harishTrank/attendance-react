@@ -93,6 +93,7 @@ const DashboardEmp = ({ userId }: any) => {
             <tr>
               <th>Name</th>
               <th>Role</th>
+              <th>Date</th>
               <th>In Time</th>
               <th>Out Time</th>
               <th>Total Hours</th>
@@ -106,6 +107,7 @@ const DashboardEmp = ({ userId }: any) => {
                   {item?.attendance_user__last_name}
                 </td>
                 <td>{item?.attendance_user__designation}</td>
+                <td>{dayjs(item?.in_time).format("DD/MM/YYYY")}</td>
                 <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
                 <td>
                   {item?.out_time

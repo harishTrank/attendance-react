@@ -99,4 +99,11 @@ export const apiUrls = {
       uri: "apply-regularization/",
     },
   },
+  approvalRegularization: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "approve-regularization/",
+    },
+  },
 };

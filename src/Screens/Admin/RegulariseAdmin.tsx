@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
-import { listRegularizationApi } from "../../store/Services";
+import {
+  approvalRegularizationApi,
+  listRegularizationApi,
+} from "../../store/Services";
 import { Pagination } from "antd";
 
 const RegulariseAdmin = () => {
@@ -39,6 +42,23 @@ const RegulariseAdmin = () => {
     setCurrentPage(page);
   };
 
+  const approvalApiHandler = (approval: any) => {
+    approvalRegularizationApi({
+      body: {
+        uuid: currentObj?.user_regularization__uuid,
+        id: currentObj?.id,
+        approval,
+      },
+    })
+      .then(() => {
+        fetchAllRegularization();
+        setRegularisePopup(false);
+      })
+      .catch((err: any) => {
+        console.log("err", err);
+      });
+  };
+
   return (
     <div className="flex">
       <Sidebar current={"Regularization"} />
@@ -67,9 +87,9 @@ const RegulariseAdmin = () => {
                     {item?.user_regularization__last_name}
                   </td>
                   <td>{item?.user_regularization__designation}</td>
+                  <td>{item?.date}</td>
                   <td>{item?.in_time}</td>
                   <td>{item?.out_time}</td>
-                  <td>{item?.date}</td>
                   <td>
                     {item?.approval ? (
                       <i
@@ -134,8 +154,15 @@ const RegulariseAdmin = () => {
               <textarea value={currentObj?.reason} rows={5}></textarea>
             </div>
             <div className="flex space-bw">
-              <button className="approve">Approve</button>
-              <button>Dis-Approve</button>
+              <button
+                onClick={() => approvalApiHandler(true)}
+                className="approve"
+              >
+                Approve
+              </button>
+              <button onClick={() => approvalApiHandler(false)}>
+                Dis-Approve
+              </button>
             </div>
           </div>
         </div>
