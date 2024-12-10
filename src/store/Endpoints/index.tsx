@@ -68,7 +68,21 @@ export const apiUrls = {
     v1: {
       ...defaults.methods.POST,
       ...defaults.versions.v1,
-      uri: "all-anouncement/",
+      uri: "in-out-time/",
+    },
+  },
+  getCurrentInTime: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "in-time/",
+    },
+  },
+  getAllAttendance: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "get-all-attendance/",
     },
   },
 };

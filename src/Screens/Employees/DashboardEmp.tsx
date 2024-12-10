@@ -1,8 +1,51 @@
+import { useEffect, useState } from "react";
 import AnounceMentList from "../../ReuseableComponent/AnounceMentList";
 import ClockInOutComp from "../../ReuseableComponent/ClockInOutComp";
 import EmployeeCalander from "../../ReuseableComponent/EmployeeCalander";
+import { getAllAttendanceApi } from "../../store/Services";
+import { Pagination } from "antd";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-const DashboardEmp = () => {
+dayjs.extend(relativeTime);
+const DashboardEmp = ({ userId }: any) => {
+  const [attendanceList, setAttendanceList]: any = useState([]);
+  const [currentPage, setCurrentPage]: any = useState(1);
+  const [totalPages, setTotalPages]: any = useState(0);
+  const [refetchState, setRefetchState]: any = useState(false);
+
+  const fetchListAttendanceApi = () => {
+    getAllAttendanceApi({
+      query: {
+        uuid: userId || sessionStorage.getItem("userId"),
+        page: currentPage,
+      },
+    })
+      .then((res: any) => {
+        setTotalPages(res?.total_pages || 0);
+        setAttendanceList(res?.results);
+      })
+      .catch((err: any) => {
+        console.log("err", err);
+      });
+  };
+
+  useEffect(() => {
+    fetchListAttendanceApi();
+  }, [userId, currentPage]);
+
+  const onPageChange = (page: any) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    if (refetchState) {
+      setCurrentPage(1);
+      fetchListAttendanceApi();
+      setRefetchState(false);
+    }
+  }, [refetchState]);
+
   return (
     <>
       <div className="stat-info">
@@ -40,7 +83,7 @@ const DashboardEmp = () => {
           <EmployeeCalander />
         </div>
         <div className="bar-chart col-40">
-          <ClockInOutComp />
+          <ClockInOutComp userId={userId} setRefetchState={setRefetchState} />
         </div>
       </div>
       <div className="all-employees">
@@ -49,29 +92,35 @@ const DashboardEmp = () => {
           <tr>
             <th>Name</th>
             <th>Role</th>
-            <th>Department</th>
             <th>In Time</th>
             <th>Out Time</th>
             <th>Total Hours</th>
           </tr>
-          <tr>
-            <td>Harsh</td>
-            <td>Front end developer</td>
-            <td>IT</td>
-            <td>10:00 AM</td>
-            <td>07:00 PM</td>
-            <td>09:00 Hrs</td>
-          </tr>
-          <tr>
-            <td>Harsh</td>
-            <td>Front end developer</td>
-            <td>IT</td>
-            <td>10:00 AM</td>
-            <td>07:00 PM</td>
-            <td>09:00 Hrs</td>
-          </tr>
+          {attendanceList.map((item: any) => (
+            <tr key={item?.id}>
+              <td>
+                {item?.attendance_user__first_name}{" "}
+                {item.attendance_user__last_name}
+              </td>
+              <td>{item?.attendance_user__designation}</td>
+              <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
+              <td>
+                {item?.out_time
+                  ? dayjs(item?.out_time).format("hh:mm:ss A")
+                  : "--"}
+              </td>
+              <td>{item?.duration?.split(".")?.[0] || "--"}</td>
+            </tr>
+          ))}
         </table>
       </div>
+      <Pagination
+        current={currentPage}
+        total={totalPages * 10}
+        onChange={onPageChange}
+        showSizeChanger={false}
+        align="center"
+      />
       <AnounceMentList />
     </>
   );

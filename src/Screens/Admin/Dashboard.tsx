@@ -2,8 +2,41 @@ import "./Dashboard.css";
 import Linechart from "../../ReuseableComponent/Linechart";
 import Sidebar from "../../ReuseableComponent/Sidebar";
 import PieChartAdmin from "../../ReuseableComponent/PieChartAdmin";
+import { useEffect, useState } from "react";
+import { getAllAttendanceApi } from "../../store/Services";
+import { Pagination } from "antd";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const Dashboard = () => {
+  const [attendanceList, setAttendanceList]: any = useState([]);
+  const [currentPage, setCurrentPage]: any = useState(1);
+  const [totalPages, setTotalPages]: any = useState(0);
+  const fetchListAttendanceApi = () => {
+    getAllAttendanceApi({
+      query: {
+        uuid: sessionStorage.getItem("userId"),
+        page: currentPage,
+      },
+    })
+      .then((res: any) => {
+        setTotalPages(res?.total_pages || 0);
+        setAttendanceList(res?.results);
+      })
+      .catch((err: any) => {
+        console.log("err", err);
+      });
+  };
+
+  useEffect(() => {
+    fetchListAttendanceApi();
+  }, [currentPage]);
+
+  const onPageChange = (page: any) => {
+    setCurrentPage(page);
+  };
   return (
     <>
       <div className="flex">
@@ -44,39 +77,37 @@ const Dashboard = () => {
               <Linechart />
             </div>
             <div className="bar-chart col-40">
-              {/* <Barchart /> */}
               <PieChartAdmin />
             </div>
           </div>
           <div className="all-employees">
             <h3>Attendance Overview</h3>
             <table>
-              <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Department</th>
-                <th>In Time</th>
-                <th>Out Time</th>
-                <th>Total Hours</th>
-              </tr>
-              <tr>
-                <td>Harsh</td>
-                <td>Front end developer</td>
-                <td>IT</td>
-                <td>10:00 AM</td>
-                <td>07:00 PM</td>
-                <td>09:00 Hrs</td>
-              </tr>
-              <tr>
-                <td>Harsh</td>
-                <td>Front end developer</td>
-                <td>IT</td>
-                <td>10:00 AM</td>
-                <td>07:00 PM</td>
-                <td>09:00 Hrs</td>
-              </tr>
+              {attendanceList.map((item: any) => (
+                <tr key={item?.id}>
+                  <td>
+                    {item?.attendance_user__first_name}{" "}
+                    {item.attendance_user__last_name}
+                  </td>
+                  <td>{item?.attendance_user__designation}</td>
+                  <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
+                  <td>
+                    {item?.out_time
+                      ? dayjs(item?.out_time).format("hh:mm:ss A")
+                      : "--"}
+                  </td>
+                  <td>{item?.duration?.split(".")?.[0] || "--"}</td>
+                </tr>
+              ))}
             </table>
           </div>
+          <Pagination
+            current={currentPage}
+            total={totalPages * 10}
+            onChange={onPageChange}
+            showSizeChanger={false}
+            align="center"
+          />
         </div>
       </div>
     </>

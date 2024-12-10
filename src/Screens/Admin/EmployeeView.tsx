@@ -64,7 +64,7 @@ const EmployeeView = () => {
           setActiveTab={handleTabChange} // Use the updated handler
         />
         {activeTab === "Dashboard" ? (
-          <DashboardEmp />
+          <DashboardEmp userId={id} />
         ) : activeTab === "Apply Leave" ? (
           <ApplyLeave />
         ) : activeTab === "View Attendance" ? (

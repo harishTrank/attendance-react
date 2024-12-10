@@ -134,7 +134,7 @@ const EmployeeTab = () => {
         setIsLoading(false);
       })
       .catch((err: any) => {
-        toast.error("This email already exits.");
+        toast.error("This email already exists.");
         setIsLoading(false);
       });
   };

@@ -21,6 +21,26 @@ const LeavesTab = () => {
                   <option value="">Sick Leave</option>
                 </select>
               </div>
+              <div className="employee-name">
+        <label htmlFor="">Choose Leave Option</label>
+        <select name="" id="">
+          <option value="">Half Day</option>
+          <option value="">Full Day</option>
+        </select>
+      </div>
+      <div className="leave-duration flex space-bw ">
+        <div className="duration-from">
+        <label htmlFor="">From</label>
+        <input type="date" />
+        </div>
+        <div className="duration-from">
+        <label htmlFor="">To</label>
+        <input type="date" />
+        </div>
+        
+      
+       
+      </div>
               <div>
                 <label htmlFor="">Reason</label>
                 <textarea name="" id="" rows={5}></textarea>
