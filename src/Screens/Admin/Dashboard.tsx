@@ -101,13 +101,15 @@ const Dashboard = () => {
               ))}
             </table>
           </div>
-          <Pagination
-            current={currentPage}
-            total={totalPages * 10}
-            onChange={onPageChange}
-            showSizeChanger={false}
-            align="center"
-          />
+          {totalPages > 1 && (
+            <Pagination
+              current={currentPage}
+              total={totalPages * 10}
+              onChange={onPageChange}
+              showSizeChanger={false}
+              align="center"
+            />
+          )}
         </div>
       </div>
     </>

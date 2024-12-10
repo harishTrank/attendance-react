@@ -85,4 +85,18 @@ export const apiUrls = {
       uri: "get-all-attendance/",
     },
   },
+  applyRegularization: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "apply-regularization/",
+    },
+  },
+  listRegularization: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "apply-regularization/",
+    },
+  },
 };

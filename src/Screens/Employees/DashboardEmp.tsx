@@ -89,38 +89,44 @@ const DashboardEmp = ({ userId }: any) => {
       <div className="all-employees">
         <h3>Attendance Overview</h3>
         <table>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>In Time</th>
-            <th>Out Time</th>
-            <th>Total Hours</th>
-          </tr>
-          {attendanceList.map((item: any) => (
-            <tr key={item?.id}>
-              <td>
-                {item?.attendance_user__first_name}{" "}
-                {item.attendance_user__last_name}
-              </td>
-              <td>{item?.attendance_user__designation}</td>
-              <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
-              <td>
-                {item?.out_time
-                  ? dayjs(item?.out_time).format("hh:mm:ss A")
-                  : "--"}
-              </td>
-              <td>{item?.duration?.split(".")?.[0] || "--"}</td>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>In Time</th>
+              <th>Out Time</th>
+              <th>Total Hours</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {attendanceList.map((item: any) => (
+              <tr key={item?.id}>
+                <td>
+                  {item?.attendance_user__first_name}{" "}
+                  {item?.attendance_user__last_name}
+                </td>
+                <td>{item?.attendance_user__designation}</td>
+                <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
+                <td>
+                  {item?.out_time
+                    ? dayjs(item?.out_time).format("hh:mm:ss A")
+                    : "--"}
+                </td>
+                <td>{item?.duration?.split(".")?.[0] || "--"}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
-      <Pagination
-        current={currentPage}
-        total={totalPages * 10}
-        onChange={onPageChange}
-        showSizeChanger={false}
-        align="center"
-      />
+      {totalPages > 1 && (
+        <Pagination
+          current={currentPage}
+          total={totalPages * 10}
+          onChange={onPageChange}
+          showSizeChanger={false}
+          align="center"
+        />
+      )}
       <AnounceMentList />
     </>
   );

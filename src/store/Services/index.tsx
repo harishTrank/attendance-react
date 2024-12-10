@@ -66,8 +66,22 @@ export const getCurrentInTimeApi = ({ query }: any) =>
     uriEndPoint: apiUrls.getCurrentInTime.v1,
     query,
   });
+
 export const getAllAttendanceApi = ({ query }: any) =>
   callApi({
     uriEndPoint: apiUrls.getAllAttendance.v1,
+    query,
+  });
+
+export const applyRegularizationApi = ({ query, body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.applyRegularization.v1,
+    body,
+    query,
+  });
+
+export const listRegularizationApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.listRegularization.v1,
     query,
   });

@@ -70,7 +70,7 @@ const EmployeeView = () => {
         ) : activeTab === "View Attendance" ? (
           <ViewAttendaceEmp />
         ) : activeTab === "Regularization" ? (
-          <RegulariseEmp />
+          <RegulariseEmp userId={id} />
         ) : activeTab === "Profile" ? (
           <ProfileEmp userId={id} />
         ) : null}
