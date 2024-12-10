@@ -85,6 +85,13 @@ export const apiUrls = {
       uri: "get-all-attendance/",
     },
   },
+  adminDashboardAttendance: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "admin-dashboard-attendance/",
+    },
+  },
   applyRegularization: {
     v1: {
       ...defaults.methods.POST,

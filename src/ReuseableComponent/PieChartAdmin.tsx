@@ -1,12 +1,6 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
-const data = [
-  ["Task", "Hours per Day"],
-  ["Present", 70],
-  ["Absent", 5],
-];
-
 // Optional
 const options = {
   title: "Today Attendance",
@@ -27,7 +21,12 @@ const options = {
   },
 };
 
-function PieChartAdmin() {
+function PieChartAdmin({ userAttendance }: any) {
+  const data = [
+    ["Task", "Hours per Day"],
+    ["Present", userAttendance?.present || 0],
+    ["Absent", userAttendance?.absent || 0],
+  ];
   return (
     <div
       style={{
