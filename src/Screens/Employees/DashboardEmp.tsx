@@ -1,5 +1,5 @@
 import AnounceMentList from "../../ReuseableComponent/AnounceMentList";
-import Barchart from "../../ReuseableComponent/Barchat";
+import ClockInOutComp from "../../ReuseableComponent/ClockInOutComp";
 import EmployeeCalander from "../../ReuseableComponent/EmployeeCalander";
 
 const DashboardEmp = () => {
@@ -40,7 +40,7 @@ const DashboardEmp = () => {
           <EmployeeCalander />
         </div>
         <div className="bar-chart col-40">
-          <Barchart />
+          <ClockInOutComp />
         </div>
       </div>
       <div className="all-employees">

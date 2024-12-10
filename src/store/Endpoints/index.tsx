@@ -64,4 +64,11 @@ export const apiUrls = {
       uri: "all-anouncement/",
     },
   },
+  clockIn: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "all-anouncement/",
+    },
+  },
 };

@@ -54,3 +54,8 @@ export const editEmployeeApi = ({ query, body }: any) =>
     query,
     body,
   });
+
+export const clockInApi = () =>
+  callApi({
+    uriEndPoint: apiUrls.clockIn.v1,
+  });
