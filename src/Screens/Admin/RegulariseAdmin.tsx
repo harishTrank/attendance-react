@@ -144,6 +144,16 @@ const RegulariseAdmin = () => {
                 <span>{currentObj?.out_time}</span>
               </div>
             </div>
+            <div className=" flex space-bw ">
+                <div className="leave-name">
+                  <label>Employeee Name</label>
+                <p>{currentObj?.user_regularization__first_name} {currentObj?.user_regularization__last_name}</p>
+                </div>
+                <div className="leave-name">
+                  <label>Role</label>
+                 <p>{currentObj?.user_regularization__designation}</p>
+                </div>
+              </div>
             <div className="selected-date flex alc">
               <label htmlFor="">Selected Date:</label>
               <p>{currentObj?.date}</p>

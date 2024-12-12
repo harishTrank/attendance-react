@@ -9,6 +9,8 @@
     padding: 10px 15px;
     background: #fff;
     height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 .sidebar ul li {
@@ -222,7 +224,7 @@
 }
 
 .leave-form>div {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .leave-form>div:last-of-type {
@@ -232,7 +234,7 @@
 .leave-form label {
     display: block;
     font-size: 16px;
-    margin-bottom: 8px;
+    
 }
 
 .leave-form textarea,
