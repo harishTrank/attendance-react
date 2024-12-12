@@ -762,3 +762,28 @@ button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
+
+/* calendar css */
+.calendar-main {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.calendar-particular-date {
+  opacity: 0.4;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-text {
+  display: flex;
+  position: absolute;
+  color: black;
+  font-size: 12px;
+}

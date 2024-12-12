@@ -66,7 +66,7 @@ const EmployeeView = () => {
         {activeTab === "Dashboard" ? (
           <DashboardEmp userId={id} />
         ) : activeTab === "Apply Leave" ? (
-          <ApplyLeave />
+          <ApplyLeave userId={id} />
         ) : activeTab === "View Attendance" ? (
           <ViewAttendaceEmp />
         ) : activeTab === "Regularization" ? (

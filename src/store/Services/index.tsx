@@ -91,8 +91,3 @@ export const approvalRegularizationApi = ({ body }: any) =>
     uriEndPoint: apiUrls.approvalRegularization.v1,
     body,
   });
-
-export const adminDashboardAttendanceApi = () =>
-  callApi({
-    uriEndPoint: apiUrls.adminDashboardAttendance.v1,
-  });

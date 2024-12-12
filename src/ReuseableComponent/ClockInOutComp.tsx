@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { clockInApi, getCurrentInTimeApi } from "../store/Services";
+import FullScreenLoader from "./FullScreenLoader";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import FullScreenLoader from "./FullScreenLoader";
 
 dayjs.extend(relativeTime);
 
