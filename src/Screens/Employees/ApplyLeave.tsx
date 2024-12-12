@@ -66,6 +66,9 @@ const ApplyLeave = ({ userId }: any) => {
   }, [userId]);
 
   return (
+    <div>
+
+   
     <div className="Leave-component">
       <FullScreenLoader loading={isLoading} />
       <form className="leave-content" onSubmit={formik.handleSubmit}>
@@ -155,6 +158,27 @@ const ApplyLeave = ({ userId }: any) => {
           </div>
         </div>
       </form>
+    </div>
+    <div className="applied-employee">
+        <div className="all-employees mt">
+                  <div className="flex space-bw alc top-h">
+                    <h3>Applied Leaves</h3>
+                  </div>
+                  <table>
+                    <tr>
+                      <th>Name</th>
+                      <th>Role</th>
+                      <th>Apply Date</th>
+                      <th>From Date</th>
+                      <th>To Date</th>
+                      <th>Status</th>
+                      <th>Option</th>
+                    </tr>
+      
+                    
+                  </table>
+                </div>
+    </div>
     </div>
   );
 };

@@ -53,7 +53,7 @@ const Dashboard = () => {
   }, []);
   return (
     <>
-      <div className="flex">
+      <div className="flex just-start">
         <Sidebar current={"Dashboard"} />
         <div className="main-area">
           <div className="stat-info">

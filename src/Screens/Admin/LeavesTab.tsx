@@ -77,13 +77,23 @@ const LeavesTab = () => {
                 </select>
               </div> */}
               <div className="leave-duration flex space-bw ">
-                <div className="duration-from">
+                <div className="duration-from-leaves">
                   <label>From</label>
                   <input type="date" readOnly value={currentObj?.from_date} />
                 </div>
-                <div className="duration-from">
+                <div className="duration-from-leaves">
                   <label>To</label>
                   <input type="date" readOnly value={currentObj?.to_date} />
+                </div>
+              </div>
+              <div className="flex space-bw ">
+                <div className=" leave-name">
+                  <label>Employeee Name</label>
+                <p>{currentObj?.leave_user__first_name} {currentObj?.leave_user__last_name}</p>
+                </div>
+                <div className=" leave-name">
+                  <label>Role</label>
+                 <p>{currentObj?.leave_user__designation}</p>
                 </div>
               </div>
               <div>
