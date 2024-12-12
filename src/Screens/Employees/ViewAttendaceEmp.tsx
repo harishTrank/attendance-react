@@ -6,11 +6,18 @@ const ViewAttendaceEmp = ({ userId }: any) => {
   const [apiResponse, setApiResponse]: any = useState([]);
   const [currentPage, setCurrentPage]: any = useState(1);
   const [totalPages, setTotalPages]: any = useState(0);
+  const [toDateSearch, setToDateSearch]: any = useState(undefined);
+  const [fromDateSearch, setFromDateSearch]: any = useState(undefined);
+  const [search, setSearch]: any = useState("");
+
   const fetchListAnouncementApi = () => {
     attendanceManagementApi({
       query: {
         page: currentPage,
         uuid: userId || sessionStorage.getItem("userId"),
+        name: search,
+        from_date: fromDateSearch,
+        to_date: toDateSearch,
       },
     })
       .then((res: any) => {
@@ -21,8 +28,10 @@ const ViewAttendaceEmp = ({ userId }: any) => {
   };
 
   useEffect(() => {
-    fetchListAnouncementApi();
-  }, [currentPage]);
+    setTimeout(() => {
+      fetchListAnouncementApi();
+    }, 300);
+  }, [currentPage, toDateSearch, fromDateSearch, search]);
 
   const onPageChange = (page: any) => {
     setCurrentPage(page);
@@ -33,12 +42,20 @@ const ViewAttendaceEmp = ({ userId }: any) => {
         <div className="search-section flex alc space-bw">
           <div className="flex alc">
             <div className="from">
-              <label htmlFor="">From</label>
-              <input type="date" />
+              <label>From</label>
+              <input
+                type="date"
+                value={fromDateSearch}
+                onChange={(e: any) => setFromDateSearch(e.target.value)}
+              />
             </div>
             <div className="to">
-              <label htmlFor="">To</label>
-              <input type="date" />
+              <label>To</label>
+              <input
+                type="date"
+                value={toDateSearch}
+                onChange={(e: any) => setToDateSearch(e.target.value)}
+              />
             </div>
           </div>
           <div className="csvdownload-btn">
@@ -55,9 +72,9 @@ const ViewAttendaceEmp = ({ userId }: any) => {
           <div className="pos-relate">
             <input
               type="text"
-              name=""
-              id=""
-              placeholder="Enter Employee Name"
+              placeholder="Search"
+              value={search}
+              onChange={(e: any) => setSearch(e.target.value)}
             />
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
