@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
-import { listLeaveRequestApi } from "../../store/Services";
+import { approveRejectApiApi, listLeaveRequestApi } from "../../store/Services";
 import { Pagination } from "antd";
+import { toast } from "react-hot-toast";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -34,6 +35,24 @@ const LeavesTab = () => {
     setCurrentPage(page);
   };
 
+  const approveRejectHandler = (val: any) => {
+    approveRejectApiApi({
+      body: {
+        leave_id: currentObj?.id,
+        status: val,
+      },
+    })
+      .then((res: any) => {
+        toast.success(`${val} request successfully.`);
+        setOpenLeaves(false);
+        fetchListAnouncementApi();
+      })
+      .catch((err: any) => {
+        toast.error(`Something went wrong.`);
+        setOpenLeaves(false);
+      });
+  };
+
   return (
     <>
       {openLeave && (
@@ -47,8 +66,7 @@ const LeavesTab = () => {
               <div>
                 <label>Leave Type</label>
                 <select>
-                  {/* <option>{currentObj}</option> */}
-                  <option>Sick Leave</option>
+                  <option>{currentObj?.leave_type} Leave</option>
                 </select>
               </div>
               {/* <div className="employee-name">
@@ -73,8 +91,15 @@ const LeavesTab = () => {
                 <textarea rows={5} readOnly value={currentObj?.reason} />
               </div>
               <div className="flex space-bw">
-                <button className="approve">Approve</button>
-                <button>Dis-Approve</button>
+                <button
+                  className="approve"
+                  onClick={() => approveRejectHandler("Approved")}
+                >
+                  Approve
+                </button>
+                <button onClick={() => approveRejectHandler("Rejected")}>
+                  Dis-Approve
+                </button>
               </div>
             </div>
           </div>

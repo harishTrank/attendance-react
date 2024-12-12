@@ -91,3 +91,43 @@ export const approvalRegularizationApi = ({ body }: any) =>
     uriEndPoint: apiUrls.approvalRegularization.v1,
     body,
   });
+
+export const adminDashboardAttendanceApi = () =>
+  callApi({
+    uriEndPoint: apiUrls.adminDashboardAttendance.v1,
+  });
+
+export const dashboardLineChartApi = () =>
+  callApi({
+    uriEndPoint: apiUrls.dashboardLineChart.v1,
+  });
+
+export const employeeAttendanceCalenderApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.employeeAttendanceCalender.v1,
+    query,
+  });
+
+export const employeeCountsCalenderApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.employeeCountsCalender.v1,
+    query,
+  });
+
+export const applyLeaveRequestApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.applyLeaveRequest.v1,
+    body,
+  });
+
+export const listLeaveRequestApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.listLeaveRequest.v1,
+    query,
+  });
+
+export const approveRejectApiApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.approveRejectApi.v1,
+    body,
+  });
