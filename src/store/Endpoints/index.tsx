@@ -113,4 +113,32 @@ export const apiUrls = {
       uri: "approve-regularization/",
     },
   },
+  dashboardLineChart: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "dashboard-linechart/",
+    },
+  },
+  employeeAttendanceCalender: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "employee-attendance/",
+    },
+  },
+  employeeCountsCalender: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "employee-counts/",
+    },
+  },
+  applyLeaveRequest: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "apply-leave/",
+    },
+  },
 };
