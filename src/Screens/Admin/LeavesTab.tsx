@@ -45,6 +45,7 @@ const LeavesTab = () => {
       .then((res: any) => {
         toast.success(`${val} request successfully.`);
         setOpenLeaves(false);
+        fetchListAnouncementApi();
       })
       .catch((err: any) => {
         toast.error(`Something went wrong.`);
