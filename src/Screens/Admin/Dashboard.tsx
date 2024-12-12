@@ -83,7 +83,7 @@ const Dashboard = () => {
                 <i className="fa-solid fa-dollar-sign"></i>
               </div>
               <p>Week Off</p>
-              <h3>10</h3>
+              <h3>{userAttendance?.weekoff}</h3>
             </div>
           </div>
           <div className="attendance-charts flex alc space-bw">

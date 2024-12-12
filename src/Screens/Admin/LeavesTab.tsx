@@ -11,6 +11,8 @@ const LeavesTab = () => {
   const [apiResponse, setApiResponse]: any = useState([]);
   const [currentPage, setCurrentPage]: any = useState(1);
   const [totalPages, setTotalPages]: any = useState(0);
+  const [currentObj, setCurrentObj]: any = useState({});
+
   const fetchListAnouncementApi = () => {
     listLeaveRequestApi({
       query: {
@@ -43,10 +45,10 @@ const LeavesTab = () => {
             <h3>Why on leave reason?</h3>
             <div className="leave-form">
               <div>
-                <label htmlFor="">Leave Type</label>
-                <select name="" id="">
-                  <option value="">Earned Leave</option>
-                  <option value="">Sick Leave</option>
+                <label>Leave Type</label>
+                <select>
+                  {/* <option>{currentObj}</option> */}
+                  <option>Sick Leave</option>
                 </select>
               </div>
               {/* <div className="employee-name">
@@ -58,17 +60,17 @@ const LeavesTab = () => {
               </div> */}
               <div className="leave-duration flex space-bw ">
                 <div className="duration-from">
-                  <label htmlFor="">From</label>
-                  <input type="date" />
+                  <label>From</label>
+                  <input type="date" readOnly value={currentObj?.from_date} />
                 </div>
                 <div className="duration-from">
-                  <label htmlFor="">To</label>
-                  <input type="date" />
+                  <label>To</label>
+                  <input type="date" readOnly value={currentObj?.to_date} />
                 </div>
               </div>
               <div>
-                <label htmlFor="">Reason</label>
-                <textarea name="" id="" rows={5}></textarea>
+                <label>Reason</label>
+                <textarea rows={5} readOnly value={currentObj?.reason} />
               </div>
               <div className="flex space-bw">
                 <button className="approve">Approve</button>
@@ -106,7 +108,12 @@ const LeavesTab = () => {
                   <td>{item?.from_date}</td>
                   <td>{item?.to_date}</td>
                   <td>{item?.status}</td>
-                  <td onClick={() => setOpenLeaves(true)}>
+                  <td
+                    onClick={() => {
+                      setOpenLeaves(true);
+                      setCurrentObj(item);
+                    }}
+                  >
                     <i className="fa-solid fa-eye"></i>
                   </td>
                 </tr>
