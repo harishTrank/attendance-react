@@ -1,8 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
+import { listLeaveRequestApi } from "../../store/Services";
+import { Pagination } from "antd";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
+dayjs.extend(relativeTime);
 const LeavesTab = () => {
   const [openLeave, setOpenLeaves] = useState(false);
+  const [apiResponse, setApiResponse]: any = useState([]);
+  const [currentPage, setCurrentPage]: any = useState(1);
+  const [totalPages, setTotalPages]: any = useState(0);
+  const fetchListAnouncementApi = () => {
+    listLeaveRequestApi({
+      query: {
+        page: currentPage,
+      },
+    })
+      .then((res: any) => {
+        setTotalPages(res?.total_pages || 0);
+        setApiResponse(res?.results);
+      })
+      .catch((err: any) => console.log("err", err));
+  };
+
+  useEffect(() => {
+    fetchListAnouncementApi();
+  }, [currentPage]);
+
+  const onPageChange = (page: any) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -21,26 +49,23 @@ const LeavesTab = () => {
                   <option value="">Sick Leave</option>
                 </select>
               </div>
-              <div className="employee-name">
-        <label htmlFor="">Choose Leave Option</label>
-        <select name="" id="">
-          <option value="">Half Day</option>
-          <option value="">Full Day</option>
-        </select>
-      </div>
-      <div className="leave-duration flex space-bw ">
-        <div className="duration-from">
-        <label htmlFor="">From</label>
-        <input type="date" />
-        </div>
-        <div className="duration-from">
-        <label htmlFor="">To</label>
-        <input type="date" />
-        </div>
-        
-      
-       
-      </div>
+              {/* <div className="employee-name">
+                <label htmlFor="">Choose Leave Option</label>
+                <select name="" id="">
+                  <option value="">Half Day</option>
+                  <option value="">Full Day</option>
+                </select>
+              </div> */}
+              <div className="leave-duration flex space-bw ">
+                <div className="duration-from">
+                  <label htmlFor="">From</label>
+                  <input type="date" />
+                </div>
+                <div className="duration-from">
+                  <label htmlFor="">To</label>
+                  <input type="date" />
+                </div>
+              </div>
               <div>
                 <label htmlFor="">Reason</label>
                 <textarea name="" id="" rows={5}></textarea>
@@ -64,42 +89,39 @@ const LeavesTab = () => {
               <tr>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Department</th>
-                <th>Avl. EL</th>
-                <th>Avl. SL</th>
-                <th>Date</th>
-                <th>Reason</th>
+                <th>Apply Date</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Status</th>
                 <th>Option</th>
               </tr>
-              <tr>
-                <td>Harsh</td>
-                <td>Front end developer</td>
-                <td>IT</td>
-                <td>5</td>
-                <td>2.5</td>
-                <td>28/11/2024</td>
-                <td>Cousin Marriage</td>
-                <td>
-                  <i
-                    className="fa-solid fa-eye"
-                    onClick={() => setOpenLeaves(true)}
-                  ></i>
-                </td>
-              </tr>
-              <tr>
-                <td>Harish</td>
-                <td>Full stack developer</td>
-                <td>IT</td>
-                <td>5</td>
-                <td>2.5</td>
-                <td>28/11/2024</td>
-                <td>Cousin Marriage</td>
-                <td>
-                  <i className="fa-solid fa-eye"></i>
-                </td>
-              </tr>
+
+              {apiResponse?.map((item: any) => (
+                <tr key={item?.id}>
+                  <td>
+                    {item?.leave_user__first_name} {item?.leave_user__last_name}
+                  </td>
+                  <td>{item?.leave_user__designation}</td>
+                  <td>{dayjs(item?.created_at).format("YYYY-MM-DD")}</td>
+                  <td>{item?.from_date}</td>
+                  <td>{item?.to_date}</td>
+                  <td>{item?.status}</td>
+                  <td onClick={() => setOpenLeaves(true)}>
+                    <i className="fa-solid fa-eye"></i>
+                  </td>
+                </tr>
+              ))}
             </table>
           </div>
+          {totalPages > 1 && (
+            <Pagination
+              current={currentPage}
+              total={totalPages * 10}
+              onChange={onPageChange}
+              showSizeChanger={false}
+              align="center"
+            />
+          )}
         </div>
       </div>
     </>

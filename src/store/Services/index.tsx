@@ -119,3 +119,9 @@ export const applyLeaveRequestApi = ({ body }: any) =>
     uriEndPoint: apiUrls.applyLeaveRequest.v1,
     body,
   });
+
+export const listLeaveRequestApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.listLeaveRequest.v1,
+    query,
+  });

@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { applyLeaveRequestApi } from "../../store/Services";
+import {
+  applyLeaveRequestApi,
+  employeeCountsCalenderApi,
+} from "../../store/Services";
 import { toast } from "react-hot-toast";
 import FullScreenLoader from "../../ReuseableComponent/FullScreenLoader";
 
 const ApplyLeave = ({ userId }: any) => {
   const [isLoading, setIsLoading]: any = useState(false);
+  const [countResults, setCountResults]: any = useState({});
 
   const validationSchema = Yup.object({
     fromDate: Yup.date().required("From date is required"),
@@ -39,7 +43,7 @@ const ApplyLeave = ({ userId }: any) => {
         },
       })
         .then(() => {
-          toast.success("Apply leave successfully.");
+          toast.success("Leave apply successfully.");
           setIsLoading(false);
         })
         .catch((err: any) => {
@@ -48,6 +52,18 @@ const ApplyLeave = ({ userId }: any) => {
         });
     },
   });
+
+  useEffect(() => {
+    employeeCountsCalenderApi({
+      query: {
+        uuid: userId || sessionStorage.getItem("userId"),
+      },
+    })
+      .then((res: any) => {
+        setCountResults(res?.response_data);
+      })
+      .catch((err: any) => console.log("err", err));
+  }, [userId]);
 
   return (
     <div className="Leave-component">
@@ -87,10 +103,10 @@ const ApplyLeave = ({ userId }: any) => {
           </div>
           <div className="flex">
             <div className="el-available">
-              <p>EL Available: 3</p>
+              <p>EL Available: {countResults?.earned_leave}</p>
             </div>
             <div className="sl-available">
-              <p>SL Available: 3</p>
+              <p>SL Available: {countResults?.sick_leave}</p>
             </div>
           </div>
         </div>

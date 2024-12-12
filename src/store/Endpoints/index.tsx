@@ -141,4 +141,11 @@ export const apiUrls = {
       uri: "apply-leave/",
     },
   },
+  listLeaveRequest: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "leave-listing/",
+    },
+  },
 };
