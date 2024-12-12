@@ -3,8 +3,8 @@ import queryString from "querystring";
 
 export const hostname = () => {
   // let hostUrl = "http://192.168.0.19:8000/api";
-  // let hostUrl = "http://192.168.0.189:8000/api/";
-  let hostUrl = "http://localhost:8000/api/";
+  let hostUrl = "http://192.168.0.134:8000/api/";
+  // let hostUrl = "http://localhost:8000/api/";
 
   return hostUrl;
 };
