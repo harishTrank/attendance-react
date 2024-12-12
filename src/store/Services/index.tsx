@@ -131,3 +131,9 @@ export const approveRejectApiApi = ({ body }: any) =>
     uriEndPoint: apiUrls.approveRejectApi.v1,
     body,
   });
+
+export const attendanceManagementApi = ({ query }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.attendanceManagementApi.v1,
+    query,
+  });

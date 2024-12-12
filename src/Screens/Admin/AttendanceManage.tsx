@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
+import { attendanceManagementApi } from "../../store/Services";
+import { Pagination } from "antd";
 
 const AttendanceManage = () => {
+  const [apiResponse, setApiResponse]: any = useState([]);
+  const [currentPage, setCurrentPage]: any = useState(1);
+  const [totalPages, setTotalPages]: any = useState(0);
+  const fetchListAnouncementApi = () => {
+    attendanceManagementApi({
+      query: {
+        page: currentPage,
+      },
+    })
+      .then((res: any) => {
+        setTotalPages(res?.total_pages || 0);
+        setApiResponse(res?.results);
+      })
+      .catch((err: any) => console.log("err", err));
+  };
+
+  useEffect(() => {
+    fetchListAnouncementApi();
+  }, [currentPage]);
+
+  const onPageChange = (page: any) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="flex">
       <Sidebar current={"Attendance Management"} />
@@ -42,43 +68,38 @@ const AttendanceManage = () => {
 
           <table>
             <tr>
-              <th>Employee Code</th>
               <th>Employee Name</th>
               <th>Designation</th>
               <th>Days worked</th>
               <th>LOP</th>
               <th>Week Off</th>
-              <th>Paid Days</th>
-              <th>Extra work days</th>
               <th>EL Applied</th>
               <th>SL Applied</th>
-              <th>Night Bonus</th>
-              <th>Refferal</th>
               <th>EL/SL Avl.</th>
             </tr>
-            <tr>
-              <td>Harsh</td>
-              <td>Front end developer</td>
-              <td>IT</td>
-              <td>5</td>
-              <td>2.5</td>
-              <td>28/11/2024</td>
-              <td>Cousin Marriage</td>
-            </tr>
-            <tr>
-              <td>Harish</td>
-              <td>Full stack developer</td>
-              <td>IT</td>
-              <td>5</td>
-              <td>2.5</td>
-              <td>28/11/2024</td>
-              <td>Cousin Marriage</td>
-              <td>
-                <i className="fa-solid fa-eye"></i>
-              </td>
-            </tr>
+            {apiResponse?.map((item: any) => (
+              <tr>
+                <td>{item?.Employee_Name}</td>
+                <td>{item?.Designation}</td>
+                <td>{item?.Days_Worked}</td>
+                <td>{item?.lop}</td>
+                <td>{item?.Week_Off}</td>
+                <td>{item?.EL_Applied}</td>
+                <td>{item?.SL_Applied}</td>
+                <td>{item?.EL_SL_Available}</td>
+              </tr>
+            ))}
           </table>
         </div>
+        {totalPages > 1 && (
+          <Pagination
+            current={currentPage}
+            total={totalPages * 10}
+            onChange={onPageChange}
+            showSizeChanger={false}
+            align="center"
+          />
+        )}
       </div>
     </div>
   );

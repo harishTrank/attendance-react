@@ -94,10 +94,14 @@ const LeavesTab = () => {
                 <button
                   className="approve"
                   onClick={() => approveRejectHandler("Approved")}
+                  disabled={currentObj?.status !== "Pending"}
                 >
                   Approve
                 </button>
-                <button onClick={() => approveRejectHandler("Rejected")}>
+                <button
+                  disabled={currentObj?.status !== "Pending"}
+                  onClick={() => approveRejectHandler("Rejected")}
+                >
                   Dis-Approve
                 </button>
               </div>
