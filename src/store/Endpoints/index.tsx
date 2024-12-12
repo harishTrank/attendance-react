@@ -148,4 +148,11 @@ export const apiUrls = {
       uri: "leave-listing/",
     },
   },
+  approveRejectApi: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "approve-leaves/",
+    },
+  },
 };

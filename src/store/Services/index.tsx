@@ -125,3 +125,9 @@ export const listLeaveRequestApi = ({ query }: any) =>
     uriEndPoint: apiUrls.listLeaveRequest.v1,
     query,
   });
+
+export const approveRejectApiApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: apiUrls.approveRejectApi.v1,
+    body,
+  });
