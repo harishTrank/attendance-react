@@ -137,3 +137,11 @@ export const attendanceManagementApi = ({ query }: any) =>
     uriEndPoint: apiUrls.attendanceManagementApi.v1,
     query,
   });
+
+
+export const downloadCsvApi=({query}:any)=>
+  callApi({
+    uriEndPoint:apiUrls.downloadcsvApi.v1,
+    query,
+  })
+

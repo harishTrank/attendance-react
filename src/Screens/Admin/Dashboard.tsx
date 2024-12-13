@@ -128,6 +128,7 @@ const Dashboard = () => {
               </tbody>
             </table>
           </div>
+          <div className="dashboard-pagination">
           {totalPages > 1 && (
             <Pagination
               current={currentPage}
@@ -137,6 +138,8 @@ const Dashboard = () => {
               align="center"
             />
           )}
+          </div>
+       
         </div>
       </div>
     </>

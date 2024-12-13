@@ -512,6 +512,7 @@ button {
   width: 100%;
   resize: none;
   outline: none;
+  padding: 10px;
 }
 .submit-cancel button{
   padding: 10px;
@@ -827,4 +828,9 @@ button:disabled {
   width: 100%;
   margin-top: 3px;
   padding: 10px;
+}
+
+.dashboard-pagination{
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

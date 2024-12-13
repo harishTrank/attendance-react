@@ -162,4 +162,11 @@ export const apiUrls = {
       uri: "attendance-management/",
     },
   },
+  downloadcsvApi: {
+    v1: {
+      ...defaults.methods.GET,
+      ...defaults.versions.v1,
+      uri: "download-csv/",
+    },
+  },
 };

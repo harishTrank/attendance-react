@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../ReuseableComponent/Sidebar";
-import { attendanceManagementApi } from "../../store/Services";
+import { attendanceManagementApi, downloadCsvApi } from "../../store/Services";
 import { Pagination } from "antd";
 
 const AttendanceManage = () => {
@@ -37,6 +37,36 @@ const AttendanceManage = () => {
     setCurrentPage(page);
   };
 
+  const handleDownloadcsv = () => {
+    downloadCsvApi({
+      query: {
+        page: currentPage,
+        name: search,
+        from_date: fromDateSearch,
+        to_date: toDateSearch,
+      },
+    })
+      .then((csvData) => {
+        const downloadCSV = (data: any, filename: any) => {
+          const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        };
+  
+       
+        downloadCSV(csvData, "employee_leave_data.csv");
+      })
+      .catch((error) => {
+        console.error("Error downloading CSV:", error);
+      });
+  };
+  
+  
+
   return (
     <div className="flex">
       <Sidebar current={"Attendance Management"} />
@@ -62,7 +92,7 @@ const AttendanceManage = () => {
               </div>
             </div>
             <div className="csvdownload-btn">
-              <button>
+              <button onClick={handleDownloadcsv}>
                 <i className="fa-solid fa-envelope-open-text" />
                 &nbsp;Download csv
               </button>

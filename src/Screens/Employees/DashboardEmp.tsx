@@ -136,6 +136,7 @@ const DashboardEmp = ({ userId }: any) => {
           </tbody>
         </table>
       </div>
+      <div className="dashboard-pagination">
       {totalPages > 1 && (
         <Pagination
           current={currentPage}
@@ -145,6 +146,8 @@ const DashboardEmp = ({ userId }: any) => {
           align="center"
         />
       )}
+      </div>
+    
       <AnounceMentList />
     </>
   );

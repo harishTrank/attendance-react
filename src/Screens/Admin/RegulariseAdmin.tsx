@@ -144,7 +144,7 @@ const RegulariseAdmin = () => {
                 <span>{currentObj?.out_time}</span>
               </div>
             </div>
-            <div className=" flex space-bw ">
+            <div className="flex space-bw ">
                 <div className="leave-name">
                   <label>Employeee Name</label>
                 <p>{currentObj?.user_regularization__first_name} {currentObj?.user_regularization__last_name}</p>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { attendanceManagementApi } from "../../store/Services";
+import { attendanceManagementApi ,downloadCsvApi} from "../../store/Services";
 import { Pagination } from "antd";
 
 const ViewAttendaceEmp = ({ userId }: any) => {
@@ -26,6 +26,36 @@ const ViewAttendaceEmp = ({ userId }: any) => {
       })
       .catch((err: any) => console.log("err", err));
   };
+
+  
+    const handleDownloadcsv = () => {
+      downloadCsvApi({
+        query: {
+          page: currentPage,
+          name: search,
+          from_date: fromDateSearch,
+          to_date: toDateSearch,
+          uuid: userId || sessionStorage.getItem("userId"),
+        },
+      })
+        .then((csvData) => {
+          const downloadCSV = (data: any, filename: any) => {
+            const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          };
+    
+         
+          downloadCSV(csvData, "employee_leave_data.csv");
+        })
+        .catch((error) => {
+          console.error("Error downloading CSV:", error);
+        });
+    };
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,7 +89,7 @@ const ViewAttendaceEmp = ({ userId }: any) => {
             </div>
           </div>
           <div className="csvdownload-btn">
-            <button>
+            <button onClick={handleDownloadcsv}>
               <i className="fa-solid fa-envelope-open-text" />
               &nbsp;Download csv
             </button>
