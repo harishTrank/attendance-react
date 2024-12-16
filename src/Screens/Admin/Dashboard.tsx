@@ -99,6 +99,7 @@ const Dashboard = () => {
             <table>
               <thead>
                 <tr>
+                  <th>Employee Code</th>
                   <th>Name</th>
                   <th>Role</th>
                   <th>Date</th>
@@ -110,6 +111,7 @@ const Dashboard = () => {
               <tbody>
                 {attendanceList.map((item: any) => (
                   <tr key={item?.id}>
+                    <td>{item?.attendance_user__emp_code}</td>
                     <td>
                       {item?.attendance_user__first_name}{" "}
                       {item.attendance_user__last_name}

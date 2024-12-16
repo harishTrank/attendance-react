@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { applyRegularizationApi } from "../../store/Services";
+import { applyRegularizationApi, getParticularEmployee } from "../../store/Services";
 import { toast } from "react-hot-toast";
 
 const RegulariseEmp = ({ userId }: any) => {
+  const [userDetails,setUserDetails]:any=useState({})
   const formik = useFormik({
     initialValues: {
       inTime: "",
       outTime: "",
       date: "",
-      reason: "", // Optional
+      reason: "", 
     },
     validationSchema: Yup.object({
       inTime: Yup.string()
@@ -49,6 +50,19 @@ const RegulariseEmp = ({ userId }: any) => {
         .catch((err: any) => toast.error(err.data?.message));
     },
   });
+  useEffect(() => {
+     getParticularEmployee({
+       query: {
+         uuid: userId || sessionStorage.getItem("userId"),
+       },
+     })
+       .then((res: any) => {
+         setUserDetails(res?.data);
+       })
+       .catch((err: any) => {
+         console.log("err", err);
+       });
+   }, []);
 
   return (
     <div className="Leave-component">
@@ -56,9 +70,13 @@ const RegulariseEmp = ({ userId }: any) => {
         <h3>Regularize</h3>
         <form onSubmit={formik.handleSubmit}>
           <div className="employee-details">
+          <div className="employee-name flex alc">
+              <p>Employee Code:</p>&nbsp;&nbsp;
+              <span>{userDetails?.emp_code}</span>
+            </div>
             <div className="employee-name flex alc">
               <p>Employee Name:</p>&nbsp;&nbsp;
-              <span>Pranav Kumar</span>
+              <span>{userDetails?.first_name} {userDetails?.last_name}</span>
             </div>
             <div className="in-out flex alc">
               <div className="reg-in">

@@ -92,11 +92,16 @@ const LeavesTab = () => {
                 <p>{currentObj?.leave_user__first_name} {currentObj?.leave_user__last_name}</p>
                 </div>
                 <div className=" leave-name">
+                  <label>Employee Code</label>
+                 <p>{currentObj?.leave_user__emp_code}</p>
+                </div>
+              </div>
+              <div className=" leave-role">
                   <label>Role</label>
                  <p>{currentObj?.leave_user__designation}</p>
                 </div>
-              </div>
-              <div>
+              
+              <div className="leave-role">
                 <label>Reason</label>
                 <textarea rows={5} readOnly value={currentObj?.reason} />
               </div>
@@ -128,6 +133,7 @@ const LeavesTab = () => {
             </div>
             <table>
               <tr>
+                <th>Employee Code</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Apply Date</th>
@@ -139,6 +145,9 @@ const LeavesTab = () => {
 
               {apiResponse?.map((item: any) => (
                 <tr key={item?.id}>
+                  <td>
+                    {item?.leave_user__emp_code}
+                  </td>
                   <td>
                     {item?.leave_user__first_name} {item?.leave_user__last_name}
                   </td>

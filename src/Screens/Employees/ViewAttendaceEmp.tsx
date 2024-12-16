@@ -112,6 +112,7 @@ const ViewAttendaceEmp = ({ userId }: any) => {
 
         <table>
           <tr>
+            <th>Employee Code</th>
             <th>Employee Name</th>
             <th>Designation</th>
             <th>Days worked</th>
@@ -123,6 +124,7 @@ const ViewAttendaceEmp = ({ userId }: any) => {
           </tr>
           {apiResponse?.map((item: any) => (
             <tr>
+              <td>{item?.Employee_Code}</td>
               <td>{item?.Employee_Name}</td>
               <td>{item?.Designation}</td>
               <td>{item?.Days_Worked}</td>

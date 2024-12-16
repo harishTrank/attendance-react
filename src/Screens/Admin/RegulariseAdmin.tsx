@@ -70,6 +70,7 @@ const RegulariseAdmin = () => {
           <table>
             <thead>
               <tr>
+                <th>Employee Code</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>In Time</th>
@@ -82,6 +83,7 @@ const RegulariseAdmin = () => {
             <tbody>
               {regularList.map((item: any) => (
                 <tr key={item?.id}>
+                  <td>{item?.user_regularization__emp_code}</td>
                   <td>
                     {item?.user_regularization__first_name}{" "}
                     {item?.user_regularization__last_name}
@@ -150,13 +152,20 @@ const RegulariseAdmin = () => {
                 <p>{currentObj?.user_regularization__first_name} {currentObj?.user_regularization__last_name}</p>
                 </div>
                 <div className="leave-name">
-                  <label>Role</label>
-                 <p>{currentObj?.user_regularization__designation}</p>
+                  <label>Employee Code</label>
+                 <p>{currentObj?.user_regularization__emp_code}</p>
                 </div>
               </div>
-            <div className="selected-date flex alc">
+            <div className="flex space-bw alc">
+              <div className="leave-name">
               <label htmlFor="">Selected Date:</label>
               <p>{currentObj?.date}</p>
+              </div>
+              <div className="leave-name">
+              <label>Role</label>
+              <p>{currentObj?.user_regularization__designation}</p>
+              </div>
+            
             </div>
 
             <div>

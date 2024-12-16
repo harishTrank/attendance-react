@@ -125,6 +125,7 @@ const EmployeeTab = () => {
         designation: values?.designation,
         address: values?.address,
         password: values?.password,
+        emp_code:values?.employeeCode,
       },
     })
       .then((res: any) => {
@@ -171,6 +172,7 @@ const EmployeeTab = () => {
     dateOfJoining: "",
     designation: "",
     address: "",
+    employeeCode:""
   });
 
   useEffect(() => {
@@ -189,13 +191,14 @@ const EmployeeTab = () => {
           : "",
         designation: editUserData?.designation || "",
         address: editUserData?.address || "",
+        employeeCode:editUserData?.emp_code || "",
       });
     }
   }, [editUserData]);
 
   const formik = useFormik({
     initialValues: initialValuesEdit,
-    enableReinitialize: true, // Add this line to reinitialize Formik on initialValues change
+    enableReinitialize: true, 
     validationSchema: Yup.object({
       firstName: Yup.string()
         .min(2, "First Name must be at least 2 characters")
@@ -215,6 +218,7 @@ const EmployeeTab = () => {
       dateOfJoining: Yup.date().required("Date of Joining is required"),
       designation: Yup.string().required("Designation is required"),
       address: Yup.string().min(10, "Address must be at least 10 characters"),
+      employeeCode:Yup.string().required("Employee Code is required")
     }),
     onSubmit: (values) => {
       setCurrentPage(1);
@@ -231,6 +235,7 @@ const EmployeeTab = () => {
           joining_date: dayjs(values?.joining_date).format("YYYY-MM-DD"),
           designation: values?.designation,
           address: values?.address,
+          emp_code:values?.employeeCode
         },
       })
         .then(() => {
@@ -280,6 +285,19 @@ const EmployeeTab = () => {
                     {() => (
                       <Form>
                         <div className="flex space-bw alc">
+                        <div className="form-group">
+                            <label>Employee Code</label>
+                            <Field
+                              type="text"
+                              name="employeeCode"
+                              placeholder="Enter first name"
+                            />
+                            <ErrorMessage
+                              name="employeeCode"
+                              component="div"
+                              className="error"
+                            />
+                          </div>
                           <div className="form-group">
                             <label>First Name</label>
                             <Field
@@ -439,6 +457,7 @@ const EmployeeTab = () => {
             <table>
               <thead>
                 <tr>
+                  <th>Employee Code</th>
                   <th>Name</th>
                   <th>Role</th>
                   <th>Gender</th>
@@ -450,6 +469,7 @@ const EmployeeTab = () => {
               <tbody>
                 {employeeList?.map((item: any, index: any) => (
                   <tr key={index}>
+                    <td>{item.emp_code}</td>
                     <td>
                       {item?.first_name} {item?.last_name}
                     </td>

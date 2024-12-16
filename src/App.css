@@ -294,6 +294,9 @@ width: 200px;
 .userfinalname{
   margin-left: 10px;
 }
+.userfinalname p span{
+  font-weight: bold;
+}
 .profile-upper{
   margin-bottom: 20px;
 }
@@ -801,12 +804,16 @@ button:disabled {
   margin-bottom: 8px;
   width: 49%;
 }
-.leave-name label{
+.leave-role{
+  margin-bottom: 8px;
+  width: 100%;
+}
+.leave-name label,.leave-role label{
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.leave-name p{
+.leave-name p ,.leave-role p{
   width: 100%;
   padding: 10px 15px;
   font-size: 14px;
@@ -834,3 +841,16 @@ button:disabled {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.ant-picker-calendar-date-content{
+ 
+    position: static;
+    width: auto;
+    height: 30px !important;
+    overflow-y: auto;
+    color: rgba(0, 0, 0, 0.88);
+    line-height: 1.5714285714285714;
+    text-align: start;
+}
+
+

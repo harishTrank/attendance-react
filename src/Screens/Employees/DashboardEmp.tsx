@@ -107,6 +107,7 @@ const DashboardEmp = ({ userId }: any) => {
         <table>
           <thead>
             <tr>
+              <th>Employee Code</th>
               <th>Name</th>
               <th>Role</th>
               <th>Date</th>
@@ -116,38 +117,50 @@ const DashboardEmp = ({ userId }: any) => {
             </tr>
           </thead>
           <tbody>
-            {attendanceList.map((item: any) => (
-              <tr key={item?.id}>
-                <td>
-                  {item?.attendance_user__first_name}{" "}
-                  {item?.attendance_user__last_name}
+            {attendanceList.length > 0 ? (
+              attendanceList.map((item: any) => (
+                <tr key={item?.id}>
+                  <td>{item?.attendance_user__emp_code}</td>
+                  <td>
+                    {item?.attendance_user__first_name}{" "}
+                    {item?.attendance_user__last_name}
+                  </td>
+                  <td>{item?.attendance_user__designation}</td>
+                  <td>{dayjs(item?.in_time).format("DD/MM/YYYY")}</td>
+                  <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
+                  <td>
+                    {item?.out_time
+                      ? dayjs(item?.out_time).format("hh:mm:ss A")
+                      : "--"}
+                  </td>
+                  <td>{item?.duration?.split(".")?.[0] || "--"}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={7}
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  No records found
                 </td>
-                <td>{item?.attendance_user__designation}</td>
-                <td>{dayjs(item?.in_time).format("DD/MM/YYYY")}</td>
-                <td>{dayjs(item?.in_time).format("hh:mm:ss A")}</td>
-                <td>
-                  {item?.out_time
-                    ? dayjs(item?.out_time).format("hh:mm:ss A")
-                    : "--"}
-                </td>
-                <td>{item?.duration?.split(".")?.[0] || "--"}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
       <div className="dashboard-pagination">
-      {totalPages > 1 && (
-        <Pagination
-          current={currentPage}
-          total={totalPages * 10}
-          onChange={onPageChange}
-          showSizeChanger={false}
-          align="center"
-        />
-      )}
+        {totalPages > 1 && (
+          <Pagination
+            current={currentPage}
+            total={totalPages * 10}
+            onChange={onPageChange}
+            showSizeChanger={false}
+            align="center"
+          />
+        )}
       </div>
-    
+
       <AnounceMentList />
     </>
   );

@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { dashboardLineChartApi } from "../store/Services";
 
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -42,7 +43,9 @@ const LineChart = () => {
         data: apiResponse?.data, // Data points
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
+        
         tension: 0.4, // Line smoothness
+   
       },
     ],
   };

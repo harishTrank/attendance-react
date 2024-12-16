@@ -25,10 +25,11 @@ const ProfileEmp = ({ userId }: any) => {
             <FaUserCircle size={60} />
           </div>
           <div className="userfinalname">
+            <p><span>Employee Code: </span>{userDetails?.emp_code}</p>
             <p>
-              {userDetails?.first_name} {userDetails?.last_name}
+              <span>Name:</span> {userDetails?.first_name} {userDetails?.last_name}
             </p>
-            <p>{userDetails?.email}</p>
+            <p><span>Email:</span> {userDetails?.email}</p>
           </div>
         </div>
 

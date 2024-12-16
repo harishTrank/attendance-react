@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import {
   applyLeaveRequestApi,
   employeeCountsCalenderApi,
+  getParticularEmployee,
   listLeaveRequestApi,
 } from "../../store/Services";
 import { toast } from "react-hot-toast";
@@ -14,6 +15,7 @@ const ApplyLeave = ({ userId }: any) => {
   const [isLoading, setIsLoading]: any = useState(false);
   const [countResults, setCountResults]: any = useState({});
   const [applyleave, setApplyLeave]: any = useState([]);
+  const [employeeDetails,setEmployeeDetails]:any=useState({})
   
 
   const validationSchema = Yup.object({
@@ -111,6 +113,20 @@ const ApplyLeave = ({ userId }: any) => {
       .catch((err: any) => console.log("err", err));
   }, [userId]);
 
+   useEffect(() => {
+      getParticularEmployee({
+        query: {
+          uuid: userId || sessionStorage.getItem("userId"),
+        },
+      })
+        .then((res: any) => {
+          setEmployeeDetails(res?.data);
+        })
+        .catch((err: any) => {
+          console.log("err", err);
+        });
+    }, []);
+
  
   
   return (
@@ -162,7 +178,11 @@ const ApplyLeave = ({ userId }: any) => {
           <div className="employee-details">
             <div className="employee-name flex alc">
               <p>Employee Name:</p>&nbsp;&nbsp;
-              <span>{applyleave?.[0]?.leave_user__first_name} {applyleave?.[0]?.leave_user__last_name}</span>
+              <span>{employeeDetails?.first_name} {employeeDetails?.last_name}</span>
+            </div>
+            <div className="employee-name flex alc">
+              <p>Employee Code:</p>&nbsp;&nbsp;
+              <span>{employeeDetails?.emp_code}</span>
             </div>
             <div className="employee-name">
               <label htmlFor="leaveType">Type of Leave</label>
@@ -212,6 +232,8 @@ const ApplyLeave = ({ userId }: any) => {
           </div>
           <table>
             <tr>
+            
+              <th>Employee Code</th>
               <th>Name</th>
               <th>Role</th>
               <th>Apply Date</th>
@@ -222,6 +244,7 @@ const ApplyLeave = ({ userId }: any) => {
             {Array.isArray(applyleave) && applyleave.length > 0 ? (
               applyleave.map((item: any) => (
                 <tr key={item?.id}>
+                  <td>{item?.leave_user__emp_code}</td>
                   <td>
                     {item?.leave_user__first_name} {item?.leave_user__last_name}
                   </td>
