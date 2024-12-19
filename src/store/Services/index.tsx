@@ -59,6 +59,7 @@ export const clockInApi = ({ body }: any) =>
   callApi({
     uriEndPoint: apiUrls.clockIn.v1,
     body,
+    multipart: true
   });
 
 export const getCurrentInTimeApi = ({ query }: any) =>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { clockInApi, getCurrentInTimeApi } from "../store/Services";
 import FullScreenLoader from "./FullScreenLoader";
 import dayjs from "dayjs";
@@ -10,6 +10,7 @@ const ClockInOutComp = ({ userId, setRefetchState }: any) => {
   const [isLoading, setIsLoading]: any = useState(false);
   const [latestRecord, setLatestRecord]: any = useState({});
   const [timeDifference, setTimeDifference]: any = useState(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const getLatestRecord = () => {
     setIsLoading(true);
@@ -29,19 +30,67 @@ const ClockInOutComp = ({ userId, setRefetchState }: any) => {
       });
   };
 
-  const clockInbtnHandler = (val: any) => {
-    clockInApi({
-      body: {
-        in_time: val === "out_time" ? "" : "in_time",
-        out_time: val === "in_time" ? "" : "out_time",
-        uuid: userId,
-      },
-    })
-      .then(() => {
-        getLatestRecord();
-      })
-      .catch((err: any) => console.log("err", err));
+  const capturePhoto = async () => {
+    try {
+     
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        const video = videoRef.current;
+        await new Promise((resolve) => (video.onloadedmetadata = resolve));
+
+      
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
+
+       
+        stream.getTracks().forEach((track) => track.stop());
+
+        
+        return canvas.toDataURL("image/jpeg");
+      }
+    } catch (err) {
+      console.error("Failed to capture photo:", err);
+      return null;
+    }
   };
+
+  const clockInbtnHandler = async (val: string) => {
+    const photo = await capturePhoto(); 
+    
+    
+    const formData = new FormData();
+    formData.append("uuid", userId);
+    formData.append("in_time", val === "out_time" ? "" : "in_time");
+    formData.append("out_time", val === "in_time" ? "" : "out_time");
+  
+    if (photo) {
+    
+      const blob = await fetch(photo).then((res) => res.blob());
+  
+      if (val === "in_time") {
+        formData.append("in_image", blob, "in_image.jpg");
+      } else if (val === "out_time") {
+        formData.append("out_image", blob, "out_image.jpg");
+      }
+    }
+    
+   
+    try {
+      await clockInApi({ body: formData });
+      getLatestRecord();
+    } catch (err: any) {
+      console.log("err", err);
+    }
+  };
+  
+  
 
   const handleClockIn = () => {
     clockInbtnHandler("in_time");
@@ -82,6 +131,7 @@ const ClockInOutComp = ({ userId, setRefetchState }: any) => {
   return (
     <div className="timer-container">
       <FullScreenLoader loading={isLoading} />
+      <video ref={videoRef} style={{ display: "none" }} autoPlay playsInline />
       <div className="circle">
         <div className="time">
           {timeDifference !== null

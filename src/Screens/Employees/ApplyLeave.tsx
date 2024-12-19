@@ -235,7 +235,7 @@ const ApplyLeave = ({ userId }: any) => {
             
               <th>Employee Code</th>
               <th>Name</th>
-              <th>Role</th>
+              <th>Designation</th>
               <th>Apply Date</th>
               <th>From Date</th>
               <th>To Date</th>

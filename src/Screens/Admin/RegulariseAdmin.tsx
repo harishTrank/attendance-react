@@ -72,7 +72,7 @@ const RegulariseAdmin = () => {
               <tr>
                 <th>Employee Code</th>
                 <th>Name</th>
-                <th>Role</th>
+                <th>Designation</th>
                 <th>In Time</th>
                 <th>Out Time</th>
                 <th>Date</th>
@@ -89,9 +89,11 @@ const RegulariseAdmin = () => {
                     {item?.user_regularization__last_name}
                   </td>
                   <td>{item?.user_regularization__designation}</td>
-                  <td>{item?.date}</td>
                   <td>{item?.in_time}</td>
                   <td>{item?.out_time}</td>
+                  <td>{item?.date}</td>
+                 
+                 
                   <td>
                     {item?.approval ? (
                       <i
@@ -162,7 +164,7 @@ const RegulariseAdmin = () => {
               <p>{currentObj?.date}</p>
               </div>
               <div className="leave-name">
-              <label>Role</label>
+              <label>Designation</label>
               <p>{currentObj?.user_regularization__designation}</p>
               </div>
             

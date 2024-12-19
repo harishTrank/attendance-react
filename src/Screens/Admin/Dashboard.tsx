@@ -101,7 +101,7 @@ const Dashboard = () => {
                 <tr>
                   <th>Employee Code</th>
                   <th>Name</th>
-                  <th>Role</th>
+                  <th>Designation</th>
                   <th>Date</th>
                   <th>In Time</th>
                   <th>Out Time</th>

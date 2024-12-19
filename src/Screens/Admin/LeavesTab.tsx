@@ -97,7 +97,7 @@ const LeavesTab = () => {
                 </div>
               </div>
               <div className=" leave-role">
-                  <label>Role</label>
+                  <label>Designation</label>
                  <p>{currentObj?.leave_user__designation}</p>
                 </div>
               
@@ -135,7 +135,7 @@ const LeavesTab = () => {
               <tr>
                 <th>Employee Code</th>
                 <th>Name</th>
-                <th>Role</th>
+                <th>Designation</th>
                 <th>Apply Date</th>
                 <th>From Date</th>
                 <th>To Date</th>

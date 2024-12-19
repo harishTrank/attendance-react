@@ -45,12 +45,19 @@ const EmployeeTab = () => {
     doj: Yup.date().required("Date of Joining is required"),
     designation: Yup.string().required("Designation is required"),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must not exceed 20 characters")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/\d/, "Password must contain at least one number")
+    .matches(/[@$!%*?&#]/, "Password must contain at least one special character (e.g., @$!%*?&#)")
+    .matches(/^\S*$/, "Password must not contain any spaces")
+    .required("Password is required"),
+  
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Confirm Password is required"),
-    address: Yup.string().required("Address is required"),
+      address: Yup.string().min(10, "Address must be at least 10 characters"),
   });
 
   const initialValues = {
@@ -459,7 +466,7 @@ const EmployeeTab = () => {
                 <tr>
                   <th>Employee Code</th>
                   <th>Name</th>
-                  <th>Role</th>
+                  <th>Designation</th>
                   <th>Gender</th>
                   <th>Phone Number</th>
                   <th>Email</th>
