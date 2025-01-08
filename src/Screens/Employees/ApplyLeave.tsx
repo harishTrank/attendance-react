@@ -27,6 +27,7 @@ const ApplyLeave = ({ userId }: any) => {
     reason: Yup.string()
       .required("Reason is required")
       .min(10, "Reason must be at least 10 characters long"),
+      dayoption:Yup.string().required("Day Option is required"),
   });
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const ApplyLeave = ({ userId }: any) => {
       toDate: "",
       leaveType: "",
       reason: "",
+      dayoption:""
     },
     validationSchema,
     onSubmit: (values) => {
@@ -64,6 +66,7 @@ const ApplyLeave = ({ userId }: any) => {
           from_date: values?.fromDate,
           to_date: values?.toDate,
           reason: values?.reason,
+          dayoption:values?.dayoption,
           uuid: userId || sessionStorage.getItem("userId"),
         },
       })
@@ -198,9 +201,22 @@ const ApplyLeave = ({ userId }: any) => {
                 <option value="Sick">SICK LEAVE</option>
               </select>
             </div>
+            
             {formik.touched.leaveType && formik.errors.leaveType ? (
               <p className="error">{formik.errors.leaveType}</p>
             ) : null}
+            <div className="employee-name">
+              <label htmlFor="dayoption">Day Options</label>
+              <select name="dayoption" id="dayoption" value={formik.values.dayoption} onChange={formik.handleChange} onBlur={formik.handleBlur}>
+                <option value="">Select Day Type</option>
+                <option value="half">Half Day</option>
+                <option value="full">Full Day</option>
+              </select>
+            </div>
+            {formik.touched.dayoption && formik.errors.dayoption ?(
+              <p className="error">{formik.errors.dayoption}</p>
+            ):null}
+            
             <div className="employee-name">
               <label htmlFor="reason">Reason for Applying</label>
               <textarea

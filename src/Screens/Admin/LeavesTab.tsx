@@ -96,9 +96,15 @@ const LeavesTab = () => {
                  <p>{currentObj?.leave_user__emp_code}</p>
                 </div>
               </div>
-              <div className=" leave-role">
+              <div className="flex space-bw">
+              <div className=" leave-name">
                   <label>Designation</label>
                  <p>{currentObj?.leave_user__designation}</p>
+                </div>
+                <div className="leave-name">
+                  <label>Type Of Day</label>
+                  <p>{currentObj?.dayoption}</p>
+                </div>
                 </div>
               
               <div className="leave-role">
