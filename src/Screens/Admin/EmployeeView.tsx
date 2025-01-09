@@ -11,6 +11,7 @@ import { userLogoutApi } from "../../store/Services";
 import { globalUserType } from "../../JotaiStore";
 import { useAtom } from "jotai";
 import { toast } from "react-hot-toast";
+import Personal from "../Employees/Personal";
 
 const EmployeeView = () => {
   const [activeTab, setActiveTab]: any = useState("Dashboard");
@@ -73,7 +74,9 @@ const EmployeeView = () => {
           <RegulariseEmp userId={id} />
         ) : activeTab === "Profile" ? (
           <ProfileEmp userId={id} />
-        ) : null}
+        ) : activeTab==="Personal Documents"?(
+          <Personal/>
+        ):  null}
       </div>
       {logoutEmp && (
         <div className="modal-overlay">

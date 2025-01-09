@@ -19,6 +19,10 @@ const adminTab: any = [
     name: "Profile",
     icon: "fa-solid fa-user-tie",
   },
+  {
+    name: "Personal Documents",
+    icon: "fa-solid fa-folder-open",
+  },
 ];
 
 const employeeTab = [
