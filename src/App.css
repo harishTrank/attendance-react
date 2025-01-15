@@ -800,7 +800,7 @@ button:disabled {
   display: flex;
   position: absolute;
   color: black;
-  font-size: 12px;
+  font-size: 10px;
 }
 .leave-name{
   margin-bottom: 8px;
@@ -875,10 +875,23 @@ button:disabled {
 
 }
 .personal-content{
-  padding: 10px;
+  padding: 20px;
 }
 .upload-section h4{
   margin-top: 20px;
   font-size: 20px;
   margin-bottom: 12px;
+}
+.aadhar input, .pan-card input{
+  width: 40%;
+ 
+}
+
+.aadhar button, .pan-card button{
+  background:#3354F4 ;
+  color: #ffff;
+  border: none;
+ 
+  margin-left: 5px;
+ padding: 6px;
 }

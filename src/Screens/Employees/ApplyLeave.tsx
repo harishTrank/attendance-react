@@ -218,7 +218,7 @@ const ApplyLeave = ({ userId }: any) => {
             ):null}
             
             <div className="employee-name">
-              <label htmlFor="reason">Reason for Applying</label>
+              <label htmlFor="reason">Reason for Leave Applying</label>
               <textarea
                 id="reason"
                 name="reason"

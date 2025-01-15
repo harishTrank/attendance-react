@@ -75,7 +75,7 @@ const EmployeeView = () => {
         ) : activeTab === "Profile" ? (
           <ProfileEmp userId={id} />
         ) : activeTab==="Personal Documents"?(
-          <Personal/>
+          <Personal userId={id} />
         ):  null}
       </div>
       {logoutEmp && (

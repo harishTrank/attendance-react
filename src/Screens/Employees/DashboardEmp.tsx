@@ -17,6 +17,8 @@ const DashboardEmp = ({ userId }: any) => {
   const [totalPages, setTotalPages]: any = useState(0);
   const [refetchState, setRefetchState]: any = useState(false);
   const [countResults, setCountResults]: any = useState({});
+  const [totalPresentFromCalendar, setTotalPresentFromCalendar] = useState(0);
+  const [totalAbsent,setTotalAbsent]=useState(0)
 
   const fetchListAttendanceApi = () => {
     getAllAttendanceApi({
@@ -70,14 +72,14 @@ const DashboardEmp = ({ userId }: any) => {
             <i className="fa-solid fa-basket-shopping"></i>
           </div>
           <p>Total Present</p>
-          <h3>{countResults?.total_present}</h3>
+          <h3>{totalPresentFromCalendar}</h3>
         </div>
         <div className="stat-cards">
           <div className="icon green">
             <i className="fa-solid fa-bag-shopping"></i>
           </div>
           <p>Total Absent</p>
-          <h3>{countResults?.total_absent}</h3>
+          <h3>{totalAbsent}</h3>
         </div>
         <div className="stat-cards">
           <div className="icon red">
@@ -96,7 +98,7 @@ const DashboardEmp = ({ userId }: any) => {
       </div>
       <div className="attendance-charts flex alc space-bw">
         <div className="line-chart col-60">
-          <EmployeeCalander userId={userId} refetchState={refetchState} />
+          <EmployeeCalander userId={userId} refetchState={refetchState}  setTotalPresent={setTotalPresentFromCalendar} setTotalAbsent={setTotalAbsent}/>
         </div>
         <div className="bar-chart col-40">
           <ClockInOutComp userId={userId} setRefetchState={setRefetchState} />

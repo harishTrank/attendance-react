@@ -169,4 +169,25 @@ export const apiUrls = {
       uri: "download-csv/",
     },
   },
+  uploadDocument:{
+    v1:{
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri:"document/"
+    },
+  },
+
+  getDocument:{
+    v1:{
+      ...defaults.methods.GET,
+       ...defaults.versions.v1,
+      uri:"document/"
+    }
+  }
+
+
+  
+ 
+
+
 };

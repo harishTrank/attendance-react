@@ -146,3 +146,15 @@ export const downloadCsvApi=({query}:any)=>
     query,
   })
 
+  export const DocumentuploadApi = ({ body }: any) =>
+    callApi({
+      uriEndPoint: apiUrls.uploadDocument.v1,
+      body,
+      multipart: true
+    });
+
+    export const getDocument=({query}:any)=>
+      callApi({
+        uriEndPoint:apiUrls.getDocument.v1,
+        query,
+      })

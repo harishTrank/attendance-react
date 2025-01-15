@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-const EmployeeCalander = ({ userId, refetchState }: any) => {
+const EmployeeCalander = ({ userId, refetchState ,setTotalPresent,setTotalAbsent }: any) => {
   const [calendarData, setCalendarData]: any = useState([]);
   const [userChangeDate, setUserChangeDate]: any = useState({
     year: dayjs().year(),
@@ -23,6 +23,10 @@ const EmployeeCalander = ({ userId, refetchState }: any) => {
     })
       .then((res: any) => {
         setCalendarData(res?.calendar_data);
+        setTotalPresent(res?.total_present)
+        setTotalAbsent(res?.total_absent)
+       
+       
       })
       .catch((err: any) => console.log("err", err));
   };
@@ -38,29 +42,47 @@ const EmployeeCalander = ({ userId, refetchState }: any) => {
   }, [refetchState]);
 
   const getStatusForDate = (date: string) => {
-    const status = calendarData.find((item: any) => item.date === date)?.status;
-    return status || "";
+    const statuses = calendarData.filter((item: any) => item.date === date);
+    if (statuses.length === 0) return "";
+  
+    const leaveStatus = statuses.find((item: any) => item.status === "Leave");
+    if (leaveStatus) {
+      let leaveType = leaveStatus.leave_type || "";
+      if (leaveType === "Earned") leaveType = "EL";
+      if (leaveType === "Sick") leaveType = "SL";
+      return `${leaveType} Applied`;
+    }
+  
+    return statuses[0].status || "";
   };
+  
+  
 
   const dateCellRender = (date: any) => {
     const formattedDate = date.format("YYYY-MM-DD");
     const status = getStatusForDate(formattedDate);
-
+  
     let borderColor = "";
-    switch (status) {
-      case "Absent":
-        borderColor = "lightcoral";
+    switch (true) {
+      case status.endsWith("Applied"): 
+        borderColor = "gold";
         break;
-      case "Present":
+      case status === "Absent":
+        borderColor = "lightcoral";                 
+        break;
+      case status === "Present":
         borderColor = "lightgreen";
         break;
-      case "Week Off":
+      case status === "Week Off":
         borderColor = "lightgray";
         break;
+        case status==="Half Day":
+          borderColor="violet"
+          break;
       default:
         borderColor = "transparent";
     }
-
+  
     return (
       <div
         className="calendar-main"
@@ -78,6 +100,7 @@ const EmployeeCalander = ({ userId, refetchState }: any) => {
       </div>
     );
   };
+  
 
   const onPanelChange = (value: any) => {
     setUserChangeDate({
